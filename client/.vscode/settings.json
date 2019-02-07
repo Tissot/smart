@@ -1,0 +1,20 @@
+{
+  "editor.tabSize": 2,
+  "emmet.includeLanguages": {
+    "postcss": "css"
+  },
+  "emmet.syntaxProfiles": {
+    "postcss": "css"
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "breadcrumbs.enabled": true,
+  "prettier.tslintIntegration": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all"
+}
