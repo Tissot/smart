@@ -6,7 +6,6 @@ export default {
   common: {
     signIn: 'Sign In',
     signUp: 'Sign Up',
-    signOut: 'Sign Out',
     loading: 'Loading...',
   },
   user: {

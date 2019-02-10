@@ -20,8 +20,8 @@ module.exports = override(
   addWebpackAlias({
     $routes: path.resolve(__dirname, 'src/routes'),
     $components: path.resolve(__dirname, 'src/components'),
-    $assets: path.resolve(__dirname, 'src/assets'),
     $contexts: path.resolve(__dirname, 'src/contexts'),
+    $assets: path.resolve(__dirname, 'src/assets'),
     $images: path.resolve(__dirname, 'src/assets/images'),
     $styles: path.resolve(__dirname, 'src/assets/styles'),
   }),

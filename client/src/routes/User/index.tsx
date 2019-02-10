@@ -6,10 +6,10 @@ import { Menu, Divider, Dropdown, Button, Icon } from 'antd';
 
 import RouteNames from '$routes/constants';
 
-import { LocaleContext } from '$contexts/LocaleContext';
-
 import Loading from '$components/Loading';
 import Error from '$components/Error';
+
+import { LocaleContext } from '$contexts/LocaleContext';
 
 import { locales } from '$assets/locales';
 
@@ -29,7 +29,7 @@ interface UserProps {
 export default React.memo(function User(props: UserProps) {
   console.log('$User re-render');
 
-  const [locale, setLocale] = React.useContext(LocaleContext);
+  const { locale, setLocale } = React.useContext(LocaleContext);
   // const [currentPath, setCurrentPath] = React.useState();
   // const menuItems: MenuItem[] = [
   //   {
@@ -55,7 +55,7 @@ export default React.memo(function User(props: UserProps) {
           onClick={React.useCallback(
             () =>
               locale.locale.key !== localeItem.key &&
-              (setLocale as any)(locales[localeItem.key]),
+              setLocale(locales[localeItem.key]),
             [locale.locale.key, localeItem.key],
           )}
         >

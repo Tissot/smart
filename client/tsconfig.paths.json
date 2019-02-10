@@ -4,8 +4,8 @@
     "paths": {
       "$components/*": ["./components/*"],
       "$routes/*": ["./routes/*"],
-      "$assets/*": ["./assets/*"],
       "$contexts/*": ["./contexts/*"],
+      "$assets/*": ["./assets/*"],
       "$images/*": ["./assets/images/*"],
       "$styles/*": ["./assets/styles/*"]
     }

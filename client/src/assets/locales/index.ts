@@ -1,7 +1,34 @@
 import en_US from './en_US';
 import zh_CN from './zh_CN';
 
-export const locales = {
+export interface Locale {
+  locale: {
+    key: string;
+    value: string;
+  };
+  common: {
+    signIn: string;
+    signUp: string;
+    loading: string;
+  };
+  user: {
+    signOut: string;
+    home: {
+      title: string;
+    };
+    report: {
+      lineChart: string;
+      barChart: string;
+    };
+  };
+  notFound: string;
+}
+
+interface Locales {
+  [key: string]: Locale;
+}
+
+export const locales: Locales = {
   en_US,
   zh_CN,
 };
