@@ -7,7 +7,7 @@ import 'moment/locale/zh-cn';
 
 import { locales } from '$assets/locales';
 
-export const LocaleContext = React.createContext([locales.en_US, (() => {}) as any]);
+export const LocaleContext = React.createContext([locales.en_US, null as any]);
 
 const otherLocaleMap = {
   [locales.en_US.locale.key]: {
@@ -24,6 +24,7 @@ interface LocaleProviderProps {
   children: React.ReactNode;
 }
 
+// prettier-ignore
 export const LocaleProvider = React.memo(function LocaleProvider(props: LocaleProviderProps) {
   console.log('$LocaleProvider re-render');
 

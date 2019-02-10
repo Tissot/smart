@@ -1,12 +1,12 @@
 export default {
   locale: {
     key: 'zh_CN',
-    value: '简体中文'
+    value: '简体中文',
   },
   common: {
     signIn: '登录',
     signUp: '注册',
-    loading: '加载中...'
+    loading: '加载中...',
   },
   user: {
     signOut: '登出',

@@ -53,10 +53,14 @@ export default React.memo(function User(props: UserProps) {
         <Menu.Item
           key={localeItem.key}
           onClick={React.useCallback(
-            () => locale.locale.key !== localeItem.key && (setLocale as any)(locales[localeItem.key]),
-            [locale.locale.key, localeItem.key]
+            () =>
+              locale.locale.key !== localeItem.key &&
+              (setLocale as any)(locales[localeItem.key]),
+            [locale.locale.key, localeItem.key],
           )}
-        >{localeItem.value}</Menu.Item>
+        >
+          {localeItem.value}
+        </Menu.Item>
       ))}
     </Menu>
   );
@@ -88,7 +92,9 @@ export default React.memo(function User(props: UserProps) {
             </Button>
           </Dropdown>
           <Divider type="vertical" />
-          <Button size="small" onClick={signOut}>{locale.user.signOut}</Button>
+          <Button size="small" onClick={signOut}>
+            {locale.user.signOut}
+          </Button>
         </div>
       </nav>
       <Query query={getHello}>
@@ -98,10 +104,10 @@ export default React.memo(function User(props: UserProps) {
           if (error !== undefined) return <Error />;
 
           return (
-            < React.Fragment>
+            <React.Fragment>
               <Link to={`${RouteNames.User.Home}/Tissot/test`}>report</Link>
               <span>{data.hello}</span>
-            </ React.Fragment>
+            </React.Fragment>
           );
         }}
       </Query>

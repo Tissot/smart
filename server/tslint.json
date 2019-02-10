@@ -1,31 +1,83 @@
 {
-  "defaultSeverity": "error",
-  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "linterOptions": {
-  "exclude": [
-    "node_modules/**/*.ts"
-  ]
+    "exclude": ["node_modules/**/*.ts"]
   },
   "jsRules": {},
   "rules": {
+    "member-access": true,
+    "member-ordering": [
+      true,
+      {
+        "order": "fields-first"
+      }
+    ],
+    "no-empty-interface": true,
+    "no-inferrable-types": true,
+    "no-internal-module": true,
+    "no-namespace": true,
+    "no-reference": true,
+    "no-unnecessary-type-assertion": true,
+    "no-var-requires": true,
+    "prefer-for-of": true,
     "promise-function-async": true,
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "onespace",
+        "index-signature": "onespace",
+        "parameter": "onespace",
+        "property-declaration": "onespace",
+        "variable-declaration": "onespace"
+      }
+    ],
+    "unified-signatures": true,
     "await-promise": true,
     "ban-comma-operator": true,
     "ban": [
       true,
       "eval",
-      { "name": "$", "message": "please don't" },
+      {
+        "name": "$",
+        "message": "please don't"
+      },
       ["describe", "only"],
-      { "name": ["it", "only"], "message": "don't focus tests" },
+      {
+        "name": ["it", "only"],
+        "message": "don't focus tests"
+      },
       {
         "name": ["chai", "assert", "equal"],
         "message": "Use 'strictEqual' instead."
       },
-      { "name": ["*", "forEach"], "message": "Use a regular for loop instead." }
+      {
+        "name": ["*", "forEach"],
+        "message": "Use a regular for loop instead."
+      }
     ],
     "curly": [true, "ignore-same-line"],
+    "label-position": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-debugger": true,
+    "no-duplicate-super": true,
     "no-duplicate-switch-case": true,
+    "no-duplicate-variable": true,
+    "no-dynamic-delete": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-floating-promises": true,
     "no-for-in-array": true,
+    "no-inferred-empty-object-type": true,
+    "no-invalid-template-strings": true,
+    "no-misused-new": true,
     "no-object-literal-type-assertion": true,
     "no-return-await": true,
     "no-sparse-arrays": true,
@@ -33,7 +85,9 @@
     "no-this-assignment": true,
     "no-unbound-method": [true, "ignore-static"],
     "no-unnecessary-class": true,
-    "no-unused-expression": true,
+    "no-unused-variable": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
     "prefer-conditional-expression": true,
     "prefer-object-spread": true,
     "strict-boolean-expressions": [
@@ -52,14 +106,21 @@
     "indent": [true, "spaces", 2],
     "max-line-length": [true, 120],
     "no-duplicate-imports": true,
-    "trailing-comma": [true, { "multiline": "always", "singleline": "never" }],
+    "object-literal-sort-keys": false,
+    "prefer-const": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
     "array-type": [true, "array"],
     "arrow-parens": [true, "ban-single-arg-parens"],
     "increment-decrement": true,
     "interface-name": [true, "never-prefix"],
     "match-default-export-name": true,
     "newline-before-return": true,
-    "newline-per-chained-call": true,
     "new-parens": true,
     "no-angle-bracket-type-assertion": true,
     "no-boolean-literal-compare": true,
@@ -92,6 +153,5 @@
     "unnecessary-bind": true,
     "variable-name": [true, "ban-keywords"],
     "whitespace": true
-  },
-  "rulesDirectory": []
+  }
 }

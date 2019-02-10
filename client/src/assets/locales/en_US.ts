@@ -1,13 +1,13 @@
 export default {
   locale: {
     key: 'en_US',
-    value: 'English'
+    value: 'English',
   },
   common: {
     signIn: 'Sign In',
     signUp: 'Sign Up',
     signOut: 'Sign Out',
-    loading: 'Loading...'
+    loading: 'Loading...',
   },
   user: {
     signOut: 'Sign Out',

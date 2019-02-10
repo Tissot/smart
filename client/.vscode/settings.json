@@ -11,10 +11,13 @@
   },
   "workbench.iconTheme": "vscode-icons",
   "breadcrumbs.enabled": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "prettier.tslintIntegration": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
-  "prettier.singleQuote": true,
-  "prettier.trailingComma": "all"
+  "tslint.alwaysShowRuleFailuresAsWarnings": true,
+  "tslint.alwaysShowStatus": true
 }

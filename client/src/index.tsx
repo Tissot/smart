@@ -9,4 +9,3 @@ import './index.less';
 
 ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
 serviceWorker.register();
-
