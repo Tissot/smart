@@ -13,6 +13,10 @@ export default {
     home: {
       title: '首页',
     },
+    report: {
+      lineChart: '折线图',
+      barChart: '柱状图',
+    },
   },
   notFound: '该页面不存在!',
 };

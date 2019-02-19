@@ -29,7 +29,8 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",

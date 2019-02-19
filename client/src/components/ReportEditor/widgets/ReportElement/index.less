@@ -1,0 +1,15 @@
+@import '~antd/lib/style/themes/default.less';
+
+// 与 './index.tsx' 中的 reportElBorderWidth 保持同步。
+@report-element-selected-border-width: 2px;
+
+.report-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: @report-element-selected-border-width solid transparent;
+}
+
+.report-element-selected {
+  border: @report-element-selected-border-width solid @primary-color;
+}

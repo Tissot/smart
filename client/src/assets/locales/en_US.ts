@@ -13,6 +13,10 @@ export default {
     home: {
       title: 'home',
     },
+    report: {
+      lineChart: 'Line Chart',
+      barChart: 'Bar Chart',
+    },
   },
   notFound: 'Not Found!',
 };
