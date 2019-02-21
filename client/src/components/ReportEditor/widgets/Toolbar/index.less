@@ -1,0 +1,13 @@
+@import '~$styles/constants.less';
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  height: @toolbar-height !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid @grey-4;
+
+  .ant-btn + .ant-btn {
+    margin-left: 4px;
+  }
+}

@@ -14,6 +14,13 @@ export default {
       title: 'home',
     },
     report: {
+      redo: 'Redo',
+      undo: 'Undo',
+      selectAll: 'Select all',
+      unselectAll: 'Unselect all',
+      deleteSelected: 'Delete selected',
+      addChart: 'Add a chart',
+      addText: 'Text',
       lineChart: 'Line Chart',
       barChart: 'Bar Chart',
     },

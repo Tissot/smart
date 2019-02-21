@@ -43,8 +43,74 @@ export default class MouseEventController {
 
   public destroy() {}
 
+  /** Toolbar */
   /**
-   * 点击 chart 列表项添加 chart。
+   * 点击 redo 按钮。
+   */
+  @bind
+  public onRedoBtnClick() {
+    this._props.reportElsDispatch({
+      type: ReportElsActionType.Redo,
+      disallowUndo: true,
+    });
+  }
+
+  /**
+   * 点击 undo 按钮。
+   */
+  @bind
+  public onUndoBtnClick() {
+    this._props.reportElsDispatch({
+      type: ReportElsActionType.Undo,
+      disallowUndo: true,
+    });
+  }
+
+  /**
+   * 点击全选按钮。
+   */
+  @bind
+  public onSelectAllBtnClick() {
+    const { reportEls, reportElsDispatch } = this._props;
+
+    reportElsDispatch({
+      type: ReportElsActionType.Select,
+      payload: reportEls.map(reportEl => reportEl.id),
+      disallowUndo: true,
+    });
+  }
+
+  /**
+   * 点击取消选择按钮。
+   */
+  @bind
+  public onUnselectAllBtnClick() {
+    const { reportEls, reportElsDispatch } = this._props;
+
+    reportElsDispatch({
+      type: ReportElsActionType.Unselect,
+      payload: reportEls.map(reportEl => reportEl.id),
+      disallowUndo: true,
+    });
+  }
+
+  /**
+   * 点击删除按钮。
+   */
+  @bind
+  public onDeleteSelectedBtnClick() {
+    const { reportEls, reportElsDispatch } = this._props;
+
+    reportElsDispatch({
+      type: ReportElsActionType.Delete,
+      payload: reportEls
+        .filter(reportEl => reportEl.selected)
+        .map(reportElToDelete => reportElToDelete.id),
+    });
+  }
+
+  /**
+   * 点击添加文本按钮。
    */
   @bind
   public onAddTextBtnClick() {
@@ -101,6 +167,7 @@ export default class MouseEventController {
     });
   }
 
+  /** Report Editor */
   /**
    * 点击 canvas container 未移动 unselect 所有元素，点击 report elements 不触发:
    *  - onCanvasContainerMouseDown
@@ -127,15 +194,16 @@ export default class MouseEventController {
     });
   }
 
+  /** Report Element */
   // prettier-ignore
-  public onReportElsMouseUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  public onReportElMouseUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     event.stopPropagation();
   }
 
   /**  鼠标按下选中 report elment。 */
   // prettier-ignore
   @bind
-  public onReportElsMouseDown(reportElsId: string[], unselectOthers: boolean) {
+  public onReportElMouseDown(reportElsId: string[], unselectOthers: boolean) {
     const { reportEls, reportElsDispatch } = this._props;
 
     if (unselectOthers) {
@@ -154,7 +222,7 @@ export default class MouseEventController {
   }
 
   /**  修复 bizcharts 的 canvas 的 cursor 总是为 default 的 bug：鼠标悬浮在 report elements 上时设置 cursor。 */
-  public onReportElsMouseMove(
+  public onReportElMouseMove(
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) {
     const canvas: HTMLCanvasElement | null = document.querySelector(

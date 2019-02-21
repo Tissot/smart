@@ -91,18 +91,18 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
       data-y={y}
       onMouseMove={
         type === ReportElType.Chart
-          ? mouseEventController.onReportElsMouseMove
+          ? mouseEventController.onReportElMouseMove
           : undefined
       }
       onMouseDown={React.useCallback(
         (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-          mouseEventController.onReportElsMouseDown(
+          mouseEventController.onReportElMouseDown(
             [id],
             !customMetaKey({ ctrlKey: event.ctrlKey, metaKey: event.metaKey }),
           ),
         [id],
       )}
-      onMouseUp={mouseEventController.onReportElsMouseUp}
+      onMouseUp={mouseEventController.onReportElMouseUp}
     >
       {(() => {
         switch (props.type) {

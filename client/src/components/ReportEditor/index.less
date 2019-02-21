@@ -1,18 +1,12 @@
 @import '~$styles/constants.less';
 
-@item-panel-width: 200px;
-
 .report-editor {
   display: flex;
 
-  .item-panel {
-    width: @item-panel-width;
-  }
-
   .report-canvas-container {
     position: relative;
-    width: calc(~'100vw - ' @item-panel-width);
-    height: calc(~'100vh - ' @nav-height);
+    width: calc(~'100vw - ' @sidebar-width);
+    height: calc(~'100vh - ' @header-height - @toolbar-height);
     min-width: @app-min-width - @sidebar-width;
   }
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { navigate, Link } from '@reach/router';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Menu, Divider, Dropdown, Button, Icon } from 'antd';
+import { Layout, Menu, Divider, Dropdown, Button, Icon } from 'antd';
 
 import RouteNames from '$routes/constants';
 
@@ -25,6 +25,8 @@ interface UserProps {
 //   key: string;
 //   value: string;
 // }
+
+const { Header, Sider, Content } = Layout;
 
 export default React.memo(function User(props: UserProps) {
   console.log('$User re-render');
@@ -74,8 +76,8 @@ export default React.memo(function User(props: UserProps) {
   `;
 
   return (
-    <React.Fragment>
-      <nav className="user-nav">
+    <Layout className="page-container">
+      <Header className="user-header">
         <img src={logo} alt="logo" className="logo" />
         <div className="right-section">
           {/* <Menu
@@ -96,21 +98,26 @@ export default React.memo(function User(props: UserProps) {
             {locale.user.signOut}
           </Button>
         </div>
-      </nav>
-      <Query query={getHello}>
-        {({ loading, error, data }) => {
-          if (loading) return <Loading />;
+      </Header>
+      <Layout>
+        <Sider className="user-sider">Sider</Sider>
+        <Content className="user-content">
+          <Query query={getHello}>
+            {({ loading, error, data }) => {
+              if (loading) return <Loading />;
 
-          if (error !== undefined) return <Error />;
+              if (error !== undefined) return <Error />;
 
-          return (
-            <React.Fragment>
-              <Link to={`${RouteNames.User.Home}/Tissot/test`}>report</Link>
-              <span>{data.hello}</span>
-            </React.Fragment>
-          );
-        }}
-      </Query>
-    </React.Fragment>
+              return (
+                <React.Fragment>
+                  <Link to={`${RouteNames.User.Home}/Tissot/test`}>report</Link>
+                  <span>{data.hello}</span>
+                </React.Fragment>
+              );
+            }}
+          </Query>
+        </Content>
+      </Layout>
+    </Layout>
   );
 });

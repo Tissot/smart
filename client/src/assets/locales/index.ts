@@ -17,6 +17,13 @@ export interface Locale {
       title: string;
     };
     report: {
+      redo: string;
+      undo: string;
+      selectAll: string;
+      unselectAll: string;
+      deleteSelected: string;
+      addChart: string;
+      addText: string;
       lineChart: string;
       barChart: string;
     };

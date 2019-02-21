@@ -1,17 +1,12 @@
-@import '~antd/lib/style/themes/default.less';
 @import '~$styles/constants.less';
 
-.user-nav {
+.user-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: @nav-horizontal-padding;
-  padding-right: @nav-horizontal-padding;
-  height: @nav-height;
-  box-shadow: @box-shadow-base;
 
   .logo {
-    height: @nav-height;
+    height: @header-height;
     cursor: pointer;
   }
 
@@ -19,4 +14,12 @@
     display: flex;
     align-items: center;
   }
+}
+
+.user-sider {
+  border-right: 1px solid @grey-4;
+}
+
+.user-content {
+  background-color: @grey-2 !important;
 }

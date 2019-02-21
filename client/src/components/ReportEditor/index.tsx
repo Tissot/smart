@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-import { LocaleContext } from '$contexts/LocaleContext';
+import { Layout } from 'antd';
 
-import ReportElement, { ReportChartType } from './widgets/ReportElement';
+import ReportElement from './widgets/ReportElement';
 import reportElsReducer, {
   ReportElsActionType,
   clearUndoRedo,
 } from './widgets/ReportElement/reducer';
+import Toolbar from './widgets/Toolbar';
+import ConfigPanel from './widgets/ConfigPanel';
 
 import {
   GController,
@@ -17,10 +19,11 @@ import {
 
 import './index.less';
 
+const { Content } = Layout;
+
 export default React.memo(function ReportEditor() {
   console.log('$ReportEditor re-render');
 
-  const { locale } = React.useContext(LocaleContext);
   const reportCanvasRef = React.useRef<HTMLDivElement>(null);
   // prettier-ignore
   const [reportEls, reportElsDispatch] = React.useReducer(reportElsReducer, []);
@@ -33,17 +36,6 @@ export default React.memo(function ReportEditor() {
     }),
     [],
   );
-
-  const reportChartTypes = [
-    {
-      key: ReportChartType.LineChart,
-      value: locale.user.report.lineChart,
-    },
-    {
-      key: ReportChartType.BarChart,
-      value: locale.user.report.barChart,
-    },
-  ];
 
   React.useEffect(() => {
     controller.interact.update({ reportEls });
@@ -69,84 +61,25 @@ export default React.memo(function ReportEditor() {
   }, []);
 
   return (
-    <div className="report-editor">
-      <div className="item-panel">
-        <div
-          style={{
-            height: '50px',
-            cursor: 'pointer',
-            border: '1px solid #000',
-          }}
-          onClick={controller.mouseEvent.onAddTextBtnClick}
+    <Layout className="report-editor">
+      <Toolbar mouseEventController={controller.mouseEvent} />
+      <Layout>
+        <Content
+          className="report-canvas-container"
+          onMouseDown={controller.mouseEvent.onCanvasContainerMouseDown}
+          onMouseUp={controller.mouseEvent.onCanvasContainerMouseUp}
         >
-          text
-        </div>
-        {reportChartTypes.map(reportChartType => (
-          <div
-            key={reportChartType.key}
-            style={{
-              height: '50px',
-              cursor: 'pointer',
-              border: '1px solid #000',
-            }}
-            onClick={React.useCallback(
-              () =>
-                controller.mouseEvent.onChartListItemClick(reportChartType.key),
-              [reportChartType.key],
-            )}
-          >
-            {reportChartType.value}
-          </div>
-        ))}
-        <div
-          style={{
-            height: '50px',
-            cursor: 'pointer',
-            border: '1px solid #000',
-          }}
-          onClick={React.useCallback(
-            () =>
-              reportElsDispatch({
-                type: ReportElsActionType.Undo,
-                disallowUndo: true,
-              }),
-            [],
-          )}
-        >
-          undo
-        </div>
-        <div
-          style={{
-            height: '50px',
-            cursor: 'pointer',
-            border: '1px solid #000',
-          }}
-          onClick={React.useCallback(
-            () =>
-              reportElsDispatch({
-                type: ReportElsActionType.Redo,
-                disallowUndo: true,
-              }),
-            [],
-          )}
-        >
-          redo
-        </div>
-      </div>
-      <div
-        className="report-canvas-container"
-        onMouseDown={controller.mouseEvent.onCanvasContainerMouseDown}
-        onMouseUp={controller.mouseEvent.onCanvasContainerMouseUp}
-      >
-        <div ref={reportCanvasRef} id="report-canvas" />
-        {reportEls.map(reportEl => (
-          <ReportElement
-            key={reportEl.id}
-            {...reportEl}
-            mouseEventController={controller.mouseEvent}
-          />
-        ))}
-      </div>
-    </div>
+          <div ref={reportCanvasRef} id="report-canvas" />
+          {reportEls.map(reportEl => (
+            <ReportElement
+              key={reportEl.id}
+              {...reportEl}
+              mouseEventController={controller.mouseEvent}
+            />
+          ))}
+        </Content>
+        <ConfigPanel />
+      </Layout>
+    </Layout>
   );
 });

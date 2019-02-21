@@ -98,7 +98,6 @@ export function redoEnabled() {
 export function clearUndoRedo() {
   undoStack = [];
   redoStack = [];
-  console.log(undoStack);
 }
 
 export default function reportElsReducer(
@@ -279,9 +278,6 @@ export default function reportElsReducer(
 
     undoStack.push(reverseAction);
   }
-
-  console.log(undoStack);
-  console.log(redoStack);
 
   return reportEls;
 }
