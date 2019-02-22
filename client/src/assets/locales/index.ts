@@ -15,6 +15,12 @@ export interface Locale {
     signOut: string;
     home: {
       title: string;
+      reports: {
+        title: string;
+      };
+      dataSources: {
+        title: string;
+      };
     };
     report: {
       redo: string;

@@ -53,8 +53,6 @@ type ReportElementProps = ReportEl & {
 const reportElSelectedBorderWidth = 2;
 
 export default React.memo(function ReportElement(props: ReportElementProps) {
-  console.log(`$ReportElement-${props.id} re-render`);
-
   const {
     id,
     type,

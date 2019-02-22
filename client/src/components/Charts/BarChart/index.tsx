@@ -9,8 +9,6 @@ import { CommonChartProps } from '../CommonChartProps';
 interface BarChartProps extends CommonChartProps {}
 
 export default React.memo(function BarChart(props: BarChartProps) {
-  console.log(`$BarChart re-render`);
-
   const { width, height, data, cols } = props;
 
   return (

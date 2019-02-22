@@ -16,8 +16,6 @@ interface ToolbarProps {
 const { Header } = Layout;
 
 export default React.memo(function Toolbar(props: ToolbarProps) {
-  console.log(`$Toolbar re-render`);
-
   const { mouseEventController } = props;
   const { locale } = React.useContext(LocaleContext);
 

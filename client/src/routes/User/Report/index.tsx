@@ -1,10 +1,8 @@
 import * as React from 'react';
-
 import { Layout, Icon } from 'antd';
-
 import { Link } from '@reach/router';
 
-import RouteNames from '$routes/constants';
+import { AbsoluteRoute } from '$routes/index';
 
 import ReportEditor from '$components/ReportEditor';
 
@@ -17,12 +15,10 @@ interface ReportProps {
 }
 
 export default React.memo(function Report(props: ReportProps) {
-  console.log('$Report re-render');
-
   return (
     <Layout className="page-container">
       <Header>
-        <Link to={`${RouteNames.User.Home}/Tissot`}>
+        <Link to={AbsoluteRoute.User.Home.Reports.replace(':userId', 'Tissot')}>
           <Icon type="left" />
         </Link>
       </Header>

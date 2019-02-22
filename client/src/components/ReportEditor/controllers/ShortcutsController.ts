@@ -37,7 +37,7 @@ export default class ShortCutsController {
   @bind
   private _onKeydown(event: KeyboardEvent) {
     const { reportEls, reportElsDispatch } = this._props;
-    console.log(event.keyCode);
+
     switch (event.keyCode) {
       // delete
       case 8:

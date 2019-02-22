@@ -12,6 +12,12 @@ export default {
     signOut: 'Sign Out',
     home: {
       title: 'home',
+      reports: {
+        title: 'Reports',
+      },
+      dataSources: {
+        title: 'Data sources',
+      },
     },
     report: {
       redo: 'Redo',

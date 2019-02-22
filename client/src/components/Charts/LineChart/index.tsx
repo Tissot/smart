@@ -10,8 +10,6 @@ import { CommonChartProps } from '../CommonChartProps';
 interface LineChartProps extends CommonChartProps {}
 
 export default React.memo(function LineChart(props: LineChartProps) {
-  console.log(`$LineChart re-render`);
-
   const { width, height, data, cols } = props;
 
   return (

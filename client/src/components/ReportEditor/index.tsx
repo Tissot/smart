@@ -22,8 +22,6 @@ import './index.less';
 const { Content } = Layout;
 
 export default React.memo(function ReportEditor() {
-  console.log('$ReportEditor re-render');
-
   const reportCanvasRef = React.useRef<HTMLDivElement>(null);
   // prettier-ignore
   const [reportEls, reportElsDispatch] = React.useReducer(reportElsReducer, []);

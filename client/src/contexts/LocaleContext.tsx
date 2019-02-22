@@ -33,8 +33,6 @@ interface LocaleProviderProps {
 
 // prettier-ignore
 export const LocaleProvider = React.memo(function LocaleProvider(props: LocaleProviderProps) {
-  console.log('$LocaleProvider re-render');
-
   const [locale, setLocale] = React.useState(locales.en_US);
   const [antdLocale, setAntdLocale] = React.useState(antd_en_US);
   const LocaleContextValue = React.useMemo(() => ({ locale, setLocale }), [locale, setLocale]);

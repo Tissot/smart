@@ -12,6 +12,12 @@ export default {
     signOut: '登出',
     home: {
       title: '首页',
+      reports: {
+        title: '报表',
+      },
+      dataSources: {
+        title: '数据源',
+      },
     },
     report: {
       redo: '重做',

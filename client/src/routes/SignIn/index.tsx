@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from '@reach/router';
 
-import RouteNames from '$routes/constants';
+import { AbsoluteRoute } from '$routes/index';
 
 import './index.less';
 
@@ -10,11 +10,11 @@ interface SignInProps {
 }
 
 export default React.memo(function SignIn(props: SignInProps) {
-  console.log('$SignIn re-render');
-
   return (
     <React.Fragment>
-      <Link to={`${RouteNames.User.Home}/Tissot`}>User</Link>
+      <Link to={AbsoluteRoute.User.Path.replace(':userId', 'Tissot')}>
+        User
+      </Link>
       Sign In
     </React.Fragment>
   );
