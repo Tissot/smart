@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Layout, Icon } from 'antd';
 import { Link } from '@reach/router';
+import { Layout, Icon } from 'antd';
 
 import { AbsoluteRoute } from '$routes/index';
 

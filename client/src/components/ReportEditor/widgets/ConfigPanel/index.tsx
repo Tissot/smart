@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { Layout } from 'antd';
 
 import './index.less';
