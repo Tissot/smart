@@ -7,9 +7,15 @@ export interface Locale {
     value: string;
   };
   common: {
+    loading: string;
+  };
+  signIn: {
     signIn: string;
     signUp: string;
-    loading: string;
+    username: string;
+    password: string;
+    usernameLimit: string;
+    passwordLimit: string;
   };
   user: {
     signOut: string;
@@ -33,6 +39,11 @@ export interface Locale {
       lineChart: string;
       barChart: string;
     };
+  };
+  error: {
+    invalidAuthorization: string;
+    nonexistentUsernameOrWrongPassword: string;
+    networkError: string;
   };
   notFound: string;
 }

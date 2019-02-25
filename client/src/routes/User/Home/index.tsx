@@ -4,7 +4,8 @@ import { Layout, Menu, Divider, Dropdown, Button, Icon } from 'antd';
 
 import { AbsoluteRoute } from '$routes/index';
 
-import { LocaleContext } from '$contexts/LocaleContext';
+import { UserContext } from '$contexts/User';
+import { LocaleContext } from '$contexts/Locale';
 
 import { locales } from '$assets/locales';
 
@@ -23,11 +24,12 @@ interface HomeProps {
 const { Header, Sider, Content } = Layout;
 
 export default React.memo(function Home(props: HomeProps) {
+  const { setUser } = React.useContext(UserContext);
   const { locale, setLocale } = React.useContext(LocaleContext);
-  const currentPaths = React.useMemo(
-    () => [`${props.uri}${props['*'] ? `/${props['*']}` : ''}`],
-    [props.uri, props['*']],
-  );
+  const currentPaths = React.useMemo(() => [`${props.uri}${props['*']}`], [
+    props.uri,
+    props['*'],
+  ]);
   const localeItems = React.useMemo(
     () => [
       {
@@ -44,11 +46,11 @@ export default React.memo(function Home(props: HomeProps) {
   const siderMenuItems = React.useMemo(
     () => [
       {
-        key: AbsoluteRoute.User.Home.Reports.replace(':userId', 'Tissot'),
+        key: AbsoluteRoute.User.Home.Reports,
         value: locale.user.home.reports.title,
       },
       {
-        key: AbsoluteRoute.User.Home.DataSources.replace(':userId', 'Tissot'),
+        key: AbsoluteRoute.User.Home.DataSources,
         value: locale.user.home.dataSources.title,
       },
     ],
@@ -74,7 +76,7 @@ export default React.memo(function Home(props: HomeProps) {
   );
 
   const signOut = React.useCallback(() => {
-    props.navigate!(AbsoluteRoute.SignIn);
+    setUser({ id: '', username: '', token: '' });
   }, []);
 
   const changePath = React.useCallback(

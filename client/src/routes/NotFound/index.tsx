@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { LocaleContext } from '$contexts/LocaleContext';
+import { LocaleContext } from '$contexts/Locale';
 
 import './index.less';
 

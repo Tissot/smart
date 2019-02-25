@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Spin } from 'antd';
 
-import { LocaleContext } from '$contexts/LocaleContext';
+import { LocaleContext } from '$contexts/Locale';
 
 import './index.less';
 

@@ -1,0 +1,12 @@
+{
+  "server": {
+    "host": "localhost",
+    "port": "4000",
+    "secret": "Smart Ming"
+  },
+  "db": {
+    "database": "smart",
+    "username": "ming",
+    "password": "buzhidao"
+  }
+}

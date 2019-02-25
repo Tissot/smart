@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "outDir": "dist",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es2018",
     "lib": ["es6", "dom"],
     "sourceMap": true,
@@ -10,7 +10,6 @@
     "strictPropertyInitialization": false,
     "allowJs": true,
     "moduleResolution": "node",
-    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -23,7 +22,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "noEmit": true,
     "experimentalDecorators": true
   },
   "include": ["src"]

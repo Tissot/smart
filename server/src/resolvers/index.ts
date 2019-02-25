@@ -1,5 +1,5 @@
-const Query = require('./query');
+import Users from './Users';
 
-module.exports = {
-  Query,
+export default {
+  ...Users,
 };

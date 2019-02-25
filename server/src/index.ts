@@ -1,25 +1,19 @@
-const Koa = require('koa');
-const cors = require('@koa/cors');
+// import Koa from 'koa';
+// import cors from '@koa/cors';
+import { ApolloServer } from 'apollo-server';
+import config from 'config';
 
-const { ApolloServer } = require('apollo-server-koa');
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
-
-const app = new Koa();
-app.use(cors({
-  origin: 'http://localhost:3000',
-  keepHeadersOnError: true,
-}));
+import typeDefs from './schema';
+import resolvers from './resolvers';
+import dataSources from './dataSources';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  dataSources,
 });
-server.applyMiddleware({ app });
+const port = Number(config.get('server.port'));
 
-const port = 3001;
-const host = 'localhost';
-
-app.listen(port, host, () =>
-  console.log(`🚀 Server ready at http://${host}:${port}${server.graphqlPath}`),
-);
+server
+  .listen({ port: port })
+  .then(({ url }) => console.log(`🚀 app running at ${url}`));

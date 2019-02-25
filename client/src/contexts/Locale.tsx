@@ -31,11 +31,14 @@ interface LocaleProviderProps {
   children: React.ReactNode;
 }
 
-// prettier-ignore
-export const LocaleProvider = React.memo(function LocaleProvider(props: LocaleProviderProps) {
+export const LocaleProvider = React.memo(function LocaleProvider(
+  props: LocaleProviderProps,
+) {
   const [locale, setLocale] = React.useState(locales.en_US);
   const [antdLocale, setAntdLocale] = React.useState(antd_en_US);
-  const LocaleContextValue = React.useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
+  const LocaleContextValue = React.useMemo(() => ({ locale, setLocale }), [
+    locale,
+  ]);
 
   React.useEffect(() => {
     const otherLocale = otherLocaleMap[locale.locale.key];

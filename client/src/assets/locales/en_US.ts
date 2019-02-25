@@ -4,9 +4,17 @@ export default {
     value: 'English',
   },
   common: {
+    loading: 'Loading...',
+  },
+  signIn: {
     signIn: 'Sign In',
     signUp: 'Sign Up',
-    loading: 'Loading...',
+    username: 'username',
+    password: 'password',
+    usernameLimit:
+      'The username should be 3 to 15 in length and consists of letters or numbers.',
+    passwordLimit:
+      'The password should be 6 to 15 in length and at least have one lowercase letter, uppercase letters as well as numbers.',
   },
   user: {
     signOut: 'Sign Out',
@@ -30,6 +38,12 @@ export default {
       lineChart: 'Line Chart',
       barChart: 'Bar Chart',
     },
+  },
+  error: {
+    invalidAuthorization: 'Invalid authorization.',
+    nonexistentUsernameOrWrongPassword:
+      'Noexistent username or wrong password.',
+    networkError: 'Network Error.',
   },
   notFound: 'Not Found!',
 };

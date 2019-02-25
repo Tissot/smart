@@ -18,7 +18,7 @@ export default React.memo(function Report(props: ReportProps) {
   return (
     <Layout className="page-container">
       <Header>
-        <Link to={AbsoluteRoute.User.Home.Reports.replace(':userId', 'Tissot')}>
+        <Link to={AbsoluteRoute.User.Home.Reports}>
           <Icon type="left" />
         </Link>
       </Header>

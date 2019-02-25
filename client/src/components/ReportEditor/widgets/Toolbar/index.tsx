@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Layout, Menu, Dropdown, Button, Icon, Divider } from 'antd';
 
-import { LocaleContext } from '$contexts/LocaleContext';
+import { LocaleContext } from '$contexts/Locale';
 
 import { MouseEventController } from '../../controllers';
 import { ReportChartType } from '../ReportElement';

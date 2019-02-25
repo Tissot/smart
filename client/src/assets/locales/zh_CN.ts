@@ -4,9 +4,16 @@ export default {
     value: '简体中文',
   },
   common: {
+    loading: '加载中...',
+  },
+  signIn: {
     signIn: '登录',
     signUp: '注册',
-    loading: '加载中...',
+    username: '用户名',
+    password: '密码',
+    usernameLimit: '用户名长度为 3 ～ 15，由字母或数字组成。',
+    passwordLimit:
+      '密码长度为 6 ～ 15，且至少有一个小写字母、大写字母以及数字。',
   },
   user: {
     signOut: '登出',
@@ -30,6 +37,11 @@ export default {
       lineChart: '折线图',
       barChart: '柱状图',
     },
+  },
+  error: {
+    invalidAuthorization: '登录失效，请重新登录',
+    nonexistentUsernameOrWrongPassword: '用户名不存在或密码错误',
+    networkError: '网络错误',
   },
   notFound: '该页面不存在!',
 };

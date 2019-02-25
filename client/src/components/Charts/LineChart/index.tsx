@@ -11,7 +11,6 @@ interface LineChartProps extends CommonChartProps {}
 
 export default React.memo(function LineChart(props: LineChartProps) {
   const { width, height, data, cols } = props;
-  console.log(data);
 
   return (
     <Chart width={width} height={height} data={data} scale={cols}>
