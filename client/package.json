@@ -11,6 +11,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@antv/data-set": "^0.10.2",
     "@antv/g": "^3.3.5",
     "@reach/router": "^1.2.1",
     "@types/graphql": "^14.0.4",

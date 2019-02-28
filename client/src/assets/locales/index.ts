@@ -8,6 +8,9 @@ export interface Locale {
   };
   common: {
     loading: string;
+    createdAt: string;
+    updatedAt: string;
+    uploadData: string;
   };
   signIn: {
     signIn: string;
@@ -42,6 +45,7 @@ export interface Locale {
   };
   error: {
     invalidAuthorization: string;
+    existingUsername: string;
     nonexistentUsernameOrWrongPassword: string;
     networkError: string;
   };

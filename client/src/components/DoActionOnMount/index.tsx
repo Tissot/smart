@@ -9,7 +9,7 @@ export default React.memo(function DoActionOnMount(
 ) {
   React.useEffect(() => {
     props.doAction();
-  });
+  }, []);
 
   return null;
 });

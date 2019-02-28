@@ -3,7 +3,7 @@ import { DataSource } from 'apollo-datasource';
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
 
-import { Store } from './index';
+import { Store } from '../store';
 
 export default class Users extends DataSource {
   private _store: Store;
@@ -20,10 +20,7 @@ export default class Users extends DataSource {
     this._context;
   }
 
-  public async signUp(
-    username: string,
-    password: string,
-  ): Promise<{ id: string; username: string; token: string }> {
+  public async signUp(username: string, password: string) {
     const secret = config.get<string>('server.secret');
     const token = jwt.sign({ username, now: Date.now() }, secret);
     const [user, create] = await this._store.users.findOrCreate({
@@ -32,18 +29,13 @@ export default class Users extends DataSource {
     });
 
     if (!create) {
-      throw new ApolloError('用户名已存在。', 'USERNAME_EXISTED');
+      throw new ApolloError('用户名已存在。', 'EXISTING_USERNAME');
     }
 
-    const id = user.getDataValue('id');
-
-    return { id, username, token };
+    return user.get();
   }
 
-  public async signInByPassword(
-    username: string,
-    password: string,
-  ): Promise<{ id: string; username: string; token: string }> {
+  public async signInByPassword(username: string, password: string) {
     const secret = config.get<string>('server.secret');
     const user = await this._store.users.findOne({
       where: { username, password },
@@ -57,31 +49,25 @@ export default class Users extends DataSource {
     }
 
     const token = jwt.sign({ username, now: Date.now() }, secret);
-    const id = user.getDataValue('id');
+    const updatedUser = await user.update({ token });
 
-    await user.update({ token });
-
-    return { id, username, token };
+    return updatedUser.get();
   }
 
-  public async signInByToken(
-    id: string,
-    token: string,
-  ): Promise<{ id: string; username: string; token: string }> {
+  public async signInByToken(id: string, token: string) {
     const secret = config.get<string>('server.secret');
     const user = await this._store.users.findOne({
       where: { id, token },
     });
 
     if (!user) {
-      throw new ApolloError('登录失效', 'INVALID_AUTHORIZATION');
+      throw new ApolloError('登录失效。', 'INVALID_AUTHORIZATION');
     }
 
     const username = user.getDataValue('username');
-    token = jwt.sign({ username, now: Date.now() }, secret);
+    const newToken = jwt.sign({ username, now: Date.now() }, secret);
+    const updatedUser = await user.update({ token: newToken });
 
-    await user.update({ token });
-
-    return { id, username, token };
+    return updatedUser.get();
   }
 }

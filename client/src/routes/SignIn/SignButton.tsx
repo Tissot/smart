@@ -8,6 +8,11 @@ import { LocaleContext } from '$contexts/Locale';
 
 import { FormValue } from './index';
 
+interface SignButtonProps {
+  type: 'sign-up' | 'sign-in';
+  validateFields(options: Object): void;
+}
+
 const SIGN_UP = gql`
   mutation signUp($username: String!, $password: String!) {
     signUp(username: $username, password: $password) {
@@ -28,11 +33,6 @@ const SIGN_IN_BY_PASSWORD = gql`
   }
 `;
 
-interface SignButtonProps {
-  type: 'sign-up' | 'sign-in';
-  validateFields(options: Object): void;
-}
-
 export default function SignButton(props: SignButtonProps) {
   const { setUser } = React.useContext(UserContext);
   const { locale } = React.useContext(LocaleContext);
@@ -52,10 +52,11 @@ export default function SignButton(props: SignButtonProps) {
     }
   }, [props.type]);
 
-  const onMutationCompleted = React.useCallback(
-    response => setUser(response.signUp || response.signInByPassword),
-    [],
-  );
+  const onMutationCompleted = React.useCallback(response => {
+    const data = response.signUp || response.signInByPassword;
+    const { id, username, token } = data;
+    setUser({ id, username, token, hasSignedIn: true });
+  }, []);
 
   return (
     <Mutation mutation={mutation} onCompleted={onMutationCompleted}>

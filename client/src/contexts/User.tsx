@@ -7,13 +7,19 @@ interface User {
   id: string;
   username: string;
   token: string;
+  hasSignedIn: boolean;
 }
 
 export const UserContext = React.createContext<{
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }>({
-  user: { id: '', username: '', token: '' },
+  user: {
+    id: window.localStorage.getItem('id') || '',
+    username: window.localStorage.getItem('username') || '',
+    token: window.localStorage.getItem('token') || '',
+    hasSignedIn: false,
+  },
   // tslint:disable-next-line
   setUser: () => {},
 });
@@ -29,6 +35,7 @@ export const UserProvider = React.memo(function UserProvider(
     id: window.localStorage.getItem('id') || '',
     username: window.localStorage.getItem('username') || '',
     token: window.localStorage.getItem('token') || '',
+    hasSignedIn: false,
   });
   const UserContextValue = React.useMemo(() => ({ user, setUser }), [user]);
 

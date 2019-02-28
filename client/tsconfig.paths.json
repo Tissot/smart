@@ -2,9 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
+      "$contexts/*": ["./contexts/*"],
       "$components/*": ["./components/*"],
       "$routes/*": ["./routes/*"],
-      "$contexts/*": ["./contexts/*"],
       "$decorators/*": ["./decorators/*"],
       "$utils/*": ["./utils/*"],
       "$assets/*": ["./assets/*"],

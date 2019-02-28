@@ -23,7 +23,7 @@ const otherLocaleMap = {
   },
   [locales.zh_CN.locale.key]: {
     antd: antd_zh_CN,
-    moment: 'zh',
+    moment: 'zh-cn',
   },
 };
 

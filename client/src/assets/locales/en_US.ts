@@ -5,6 +5,9 @@ export default {
   },
   common: {
     loading: 'Loading...',
+    createdAt: 'Created at',
+    updatedAt: 'Updated at',
+    uploadData: 'Upload data',
   },
   signIn: {
     signIn: 'Sign In',
@@ -41,6 +44,7 @@ export default {
   },
   error: {
     invalidAuthorization: 'Invalid authorization.',
+    existingUsername: 'Existing Username.',
     nonexistentUsernameOrWrongPassword:
       'Noexistent username or wrong password.',
     networkError: 'Network Error.',

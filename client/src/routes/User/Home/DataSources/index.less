@@ -1,0 +1,40 @@
+@import '~$styles/constants.less';
+
+.data-sources {
+  padding: 50px;
+
+  .ant-list {
+    background-color: white;
+
+    .ant-list-item-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .left-section {
+        display: flex;
+        align-items: center;
+
+        .data-source-info {
+          display: flex;
+          flex-direction: column;
+          margin-left: 20px;
+
+          .data-source-name {
+            font-size: 16px;
+            color: black;
+          }
+
+          .data-source-op-time {
+            font-size: 12px;
+            color: @grey-7;
+
+            span + span {
+              margin-left: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

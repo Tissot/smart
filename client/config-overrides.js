@@ -18,9 +18,9 @@ module.exports = override(
     modifyVars: { '@primary-color': '#1890ff' },
   }),
   addWebpackAlias({
+    $contexts: path.resolve(__dirname, 'src/contexts'),
     $routes: path.resolve(__dirname, 'src/routes'),
     $components: path.resolve(__dirname, 'src/components'),
-    $contexts: path.resolve(__dirname, 'src/contexts'),
     $decorators: path.resolve(__dirname, 'src/decorators'),
     $utils: path.resolve(__dirname, 'src/utils'),
     $assets: path.resolve(__dirname, 'src/assets'),

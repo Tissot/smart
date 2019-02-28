@@ -76,7 +76,7 @@ export default React.memo(function Home(props: HomeProps) {
   );
 
   const signOut = React.useCallback(() => {
-    setUser({ id: '', username: '', token: '' });
+    setUser({ id: '', username: '', token: '', hasSignedIn: false });
   }, []);
 
   const changePath = React.useCallback(

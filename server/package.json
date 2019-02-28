@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@types/config": "^0.0.34",
-    "@types/koa": "^2.0.48",
     "@types/node": "^10.12.18",
     "@types/sequelize": "^4.27.37",
     "cross-env": "^5.2.0",
@@ -30,14 +29,11 @@
     "yarpm": "^0.2.1"
   },
   "dependencies": {
-    "@koa/cors": "^2.2.3",
     "@types/jsonwebtoken": "^8.3.0",
     "apollo-server": "^2.3.1",
-    "apollo-server-koa": "^2.3.1",
     "config": "^3.0.1",
     "graphql": "^14.0.2",
     "jsonwebtoken": "^8.5.0",
-    "koa": "^2.6.2",
     "sequelize": "^4.42.0",
     "sqlite3": "^4.0.6"
   }

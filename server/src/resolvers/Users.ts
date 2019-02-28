@@ -6,23 +6,23 @@ interface UsersMutation {
     args: { username: string; password: string },
     context: Config['context'],
     info: any,
-  ): Promise<{ id: string; username: string; token: string }>;
+  ): any;
   signInByPassword(
     parent: any,
     args: { username: string; password: string },
     context: Config['context'],
     info: any,
-  ): Promise<{ id: string; username: string; token: string }>;
+  ): any;
   signInByToken(
     parent: any,
     args: { id: string; token: string },
     context: Config['context'],
     info: any,
-  ): Promise<{ id: string; username: string; token: string }>;
+  ): any;
 }
 
-const Mutation: UsersMutation = {
-  signUp: async(_, { username, password }, context) => {
+export const userMutation: UsersMutation = {
+  signUp: async(_, { username, password }, { dataSources }) => {
     if (!/^[\da-zA-Z]{3,15}$/g.test(username)) {
       throw new UserInputError('用户名长度为 3 ～ 15，由字母或数字组成。');
     }
@@ -33,29 +33,22 @@ const Mutation: UsersMutation = {
       );
     }
 
-    const user = await context.dataSources.users.signUp(username, password);
+    const user = await dataSources.users.signUp(username, password);
 
     return user;
   },
-  signInByPassword: async(_, { username, password }, context) => {
+  signInByPassword: async(_, { username, password }, { dataSources }) => {
     if (!/^[\da-zA-Z]{3,15}$/g.test(username)) {
       throw new UserInputError('用户名长度为 3 ～ 15，由字母或数字组成。');
     }
 
-    const user = await context.dataSources.users.signInByPassword(
-      username,
-      password,
-    );
+    const user = await dataSources.users.signInByPassword(username, password);
 
     return user;
   },
-  signInByToken: async(_, { id, token }, context) => {
-    const user = await context.dataSources.users.signInByToken(id, token);
+  signInByToken: async(_, { id, token }, { dataSources }) => {
+    const user = await dataSources.users.signInByToken(id, token);
 
     return user;
   },
-};
-
-export default {
-  Mutation,
 };

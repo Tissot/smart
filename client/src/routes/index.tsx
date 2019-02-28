@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Router } from '@reach/router';
-import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Mutation } from 'react-apollo';
 
 import { UserContext } from '$contexts/User';
 
@@ -41,18 +41,26 @@ const SIGN_IN_BY_TOKEN = gql`
 `;
 
 export default React.memo(function Routes(props) {
-  const { user, setUser } = React.useContext(UserContext);
-  const onMutationCompleted = React.useCallback(
-    ({ signInByToken }) => setUser(signInByToken),
-    [],
-  );
+  const {
+    user: { id, username, token, hasSignedIn },
+    setUser,
+  } = React.useContext(UserContext);
+  const onMutationCompleted = React.useCallback(({ signInByToken }) => {
+    const { id, username, token } = signInByToken;
+    setUser({ id, username, token, hasSignedIn: true });
+  }, []);
 
   return (
     <React.Suspense fallback={<Loading />}>
-      <Mutation mutation={SIGN_IN_BY_TOKEN} onCompleted={onMutationCompleted}>
-        {(signInByToken, { called, loading, error }) => {
-          const { id, username, token } = user;
-
+      <Mutation
+        mutation={SIGN_IN_BY_TOKEN}
+        variables={{
+          id,
+          token,
+        }}
+        onCompleted={onMutationCompleted}
+      >
+        {(signInByToken, { loading, error }) => {
           if (!id || !username || !token) {
             return (
               <Router className="Routes">
@@ -62,19 +70,8 @@ export default React.memo(function Routes(props) {
             );
           }
 
-          if (!called) {
-            return (
-              <DoActionOnMount
-                doAction={() =>
-                  signInByToken({
-                    variables: {
-                      id,
-                      token,
-                    },
-                  })
-                }
-              />
-            );
+          if (!hasSignedIn) {
+            return <DoActionOnMount doAction={signInByToken} />;
           }
 
           if (loading) return <Loading />;
