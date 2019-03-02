@@ -10,7 +10,6 @@ export interface Locale {
     loading: string;
     createdAt: string;
     updatedAt: string;
-    uploadData: string;
   };
   signIn: {
     signIn: string;
@@ -26,9 +25,12 @@ export interface Locale {
       title: string;
       reports: {
         title: string;
+        addReport: string;
+        unnamedReport: string;
       };
       dataSources: {
         title: string;
+        addDataSource: string;
       };
     };
     report: {
@@ -44,9 +46,11 @@ export interface Locale {
     };
   };
   error: {
-    invalidAuthorization: string;
+    unauthorized: string;
     existingUsername: string;
     nonexistentUsernameOrWrongPassword: string;
+    reportNotFound: string;
+    dataSourceNotFound: string;
     networkError: string;
   };
   notFound: string;

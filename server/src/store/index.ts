@@ -19,9 +19,18 @@ interface DataSource {
   data: string;
 }
 
+interface Report {
+  id: string;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerId: string;
+  name: string;
+}
+
 export interface Store {
   users: SQL.Model<Instance<User>, User>;
   dataSources: SQL.Model<Instance<DataSource>, DataSource>;
+  reports: SQL.Model<Instance<Report>, Report>;
 }
 
 const db = new SQL({
@@ -86,4 +95,26 @@ const dataSources = db.define<Instance<DataSource>, DataSource>(
   { timestamps: true },
 );
 
-export default { users, dataSources };
+const reports = db.define<Instance<Report>, Report>(
+  'reports',
+  {
+    id: {
+      type: SQL.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      unique: true,
+      comment: '报告 id',
+    },
+    ownerId: {
+      type: SQL.INTEGER,
+      comment: '报告所有者 id',
+    },
+    name: {
+      type: SQL.STRING,
+      comment: '报告名',
+    },
+  },
+  { timestamps: true },
+);
+
+export default { users, dataSources, reports };

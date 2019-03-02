@@ -66,7 +66,7 @@ function UploadData(props: UploadDataProps) {
     <Upload accept=".csv" showUploadList={false} beforeUpload={beforeUpload}>
       <Button>
         <Icon type="upload" />
-        {locale.common.uploadData}
+        {locale.user.home.dataSources.addDataSource}
       </Button>
     </Upload>
   );

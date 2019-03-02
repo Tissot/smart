@@ -5,6 +5,7 @@ const {
   fixBabelImports,
   addLessLoader,
   addWebpackAlias,
+  addTslintLoader,
 } = require('customize-cra');
 
 module.exports = override(
@@ -27,4 +28,5 @@ module.exports = override(
     $images: path.resolve(__dirname, 'src/assets/images'),
     $styles: path.resolve(__dirname, 'src/assets/styles'),
   }),
+  addTslintLoader(),
 );

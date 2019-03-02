@@ -23,10 +23,13 @@ export default {
     home: {
       title: '首页',
       reports: {
-        title: '报表',
+        title: '报告',
+        addReport: '新建报告',
+        unnamedReport: '未命名报告',
       },
       dataSources: {
         title: '数据源',
+        addDataSource: '新建数据源',
       },
     },
     report: {
@@ -42,10 +45,12 @@ export default {
     },
   },
   error: {
-    invalidAuthorization: '登录失效，请重新登录',
-    existingUsername: '用户名已存在',
-    nonexistentUsernameOrWrongPassword: '用户名不存在或密码错误',
-    networkError: '网络错误',
+    unauthorized: '登录失效，请重新登录。',
+    existingUsername: '用户名已存在。',
+    nonexistentUsernameOrWrongPassword: '用户名不存在或密码错误。',
+    reportNotFound: '报告不存在。',
+    dataSourceNotFound: '数据源不存在。',
+    networkError: '网络错误。',
   },
-  notFound: '该页面不存在!',
+  notFound: '该页面不存在。',
 };

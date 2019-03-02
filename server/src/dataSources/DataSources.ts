@@ -1,9 +1,9 @@
-import { Config } from 'apollo-server';
+import { Config, ApolloError } from 'apollo-server';
 import { DataSource } from 'apollo-datasource';
 
 import { Store } from '../store';
 
-export default class Users extends DataSource {
+export default class DataSources extends DataSource {
   private _store: Store;
   private _context: any;
 
@@ -23,6 +23,7 @@ export default class Users extends DataSource {
 
     const dataSources = await this._store.dataSources.findAndCountAll({
       where: { ownerId },
+      order: [['updatedAt', 'DESC']],
     });
 
     return dataSources;
@@ -43,8 +44,14 @@ export default class Users extends DataSource {
   public async removeDataSource(id: string) {
     const ownerId = this._context.user.id;
 
-    return !!(await this._store.dataSources.destroy({
+    const dataSourcesRemovedCount = await this._store.dataSources.destroy({
       where: { id, ownerId },
-    }));
+    });
+
+    if (!dataSourcesRemovedCount) {
+      throw new ApolloError('数据源不存在。', 'DATA_SOURCE_NOT_FOUND');
+    }
+
+    return !!dataSourcesRemovedCount;
   }
 }

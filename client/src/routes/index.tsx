@@ -31,7 +31,7 @@ export const AbsoluteRoute = {
 };
 
 const SIGN_IN_BY_TOKEN = gql`
-  mutation signInByToken($id: String!, $token: String!) {
+  mutation signInByToken($id: ID!, $token: String!) {
     signInByToken(id: $id, token: $token) {
       id
       username

@@ -26,20 +26,17 @@ interface DataSourcesMutation {
 
 export const dataSourcesQuery: DataSourcesQuery = {
   getDataSources: async(_, __, { dataSources }) => {
-    const dataSourceFound = await dataSources.dataSources.getDataSources();
+    const dataSourcesFound = await dataSources.dataSources.getDataSources();
 
-    return dataSourceFound;
+    return dataSourcesFound;
   },
 };
 
 export const dataSourcesMutation: DataSourcesMutation = {
   addDataSource: async(_, { name, data }, { dataSources }) => {
-    const dataSourceAdded = await dataSources.dataSources.addDataSource(
-      name,
-      data,
-    );
+    const dataSource = await dataSources.dataSources.addDataSource(name, data);
 
-    return dataSourceAdded;
+    return dataSource;
   },
   removeDataSource: async(_, { id }, { dataSources }) => {
     const successful = await dataSources.dataSources.removeDataSource(id);

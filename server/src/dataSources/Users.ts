@@ -43,7 +43,7 @@ export default class Users extends DataSource {
 
     if (!user) {
       throw new ApolloError(
-        '用户名不存在或密码错误',
+        '用户名不存在或密码错误。',
         'NONEXISTENT_USERNAME_OR_WRONG_PASSWORD',
       );
     }
@@ -61,7 +61,7 @@ export default class Users extends DataSource {
     });
 
     if (!user) {
-      throw new ApolloError('登录失效。', 'INVALID_AUTHORIZATION');
+      throw new ApolloError('登录失效。', 'UNAUTHORIZED');
     }
 
     const username = user.getDataValue('username');

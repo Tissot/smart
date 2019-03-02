@@ -272,7 +272,7 @@ export default function reportElsReducer(
       redoStack = [];
 
       if (undoStack.length === undoStackMaxLength) {
-        undoStack.unshift();
+        undoStack.shift();
       }
     }
 

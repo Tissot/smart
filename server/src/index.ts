@@ -14,19 +14,19 @@ const context = async({ req }: any) => {
       req.body.operationName,
     ) !== -1
   ) {
-    return;
+    return {};
   }
 
   const token = req.headers && req.headers.authorization;
 
   if (!token) {
-    throw new ApolloError('登录失效。', 'INVALID_AUTHORIZATION');
+    throw new ApolloError('登录失效。', 'UNAUTHORIZED');
   }
 
   const user = await store.users.findOne({ where: { token } });
 
   if (!user) {
-    throw new ApolloError('登录失效。', 'INVALID_AUTHORIZATION');
+    throw new ApolloError('登录失效。', 'UNAUTHORIZED');
   }
 
   return { user: user.get() };

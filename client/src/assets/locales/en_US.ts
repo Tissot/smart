@@ -7,7 +7,6 @@ export default {
     loading: 'Loading...',
     createdAt: 'Created at',
     updatedAt: 'Updated at',
-    uploadData: 'Upload data',
   },
   signIn: {
     signIn: 'Sign In',
@@ -25,9 +24,12 @@ export default {
       title: 'home',
       reports: {
         title: 'Reports',
+        addReport: 'Add a report',
+        unnamedReport: 'Unnamed report',
       },
       dataSources: {
         title: 'Data sources',
+        addDataSource: 'Add a data source',
       },
     },
     report: {
@@ -43,10 +45,12 @@ export default {
     },
   },
   error: {
-    invalidAuthorization: 'Invalid authorization.',
+    unauthorized: 'Unauthorized.',
     existingUsername: 'Existing Username.',
     nonexistentUsernameOrWrongPassword:
       'Noexistent username or wrong password.',
+    reportNotFound: 'Report not found.',
+    dataSourceNotFound: 'Data source not found.',
     networkError: 'Network Error.',
   },
   notFound: 'Not Found!',

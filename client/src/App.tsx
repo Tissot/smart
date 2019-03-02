@@ -13,13 +13,13 @@ import './App.less';
 export default React.memo(function App() {
   return (
     <UserProvider>
-      <ApolloProvider>
-        <LocaleProvider>
-          <ErrorBoundary>
+      <LocaleProvider>
+        <ErrorBoundary>
+          <ApolloProvider>
             <Routes />
-          </ErrorBoundary>
-        </LocaleProvider>
-      </ApolloProvider>
+          </ApolloProvider>
+        </ErrorBoundary>
+      </LocaleProvider>
     </UserProvider>
   );
 });

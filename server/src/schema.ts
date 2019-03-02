@@ -4,16 +4,23 @@ export default gql`
   type Query {
     # DataSource
     getDataSources: DataSources!
+    # Report
+    # getReportById: Report!
+    getReports: Reports!
   }
 
   type Mutation {
     # User
     signUp(username: String!, password: String!): User!
     signInByPassword(username: String!, password: String!): User!
-    signInByToken(id: String!, token: String!): User!
+    signInByToken(id: ID!, token: String!): User!
     # DataSource
     addDataSource(name: String!, data: String!): DataSource!
-    removeDataSource(id: String!): Boolean!
+    removeDataSource(id: ID!): Boolean!
+    # Report
+    addReport: Report!
+    removeReport(id: ID!): Boolean!
+    # renameReport(id: ID!, name: String!): Boolean!
   }
 
   type User {
@@ -35,5 +42,17 @@ export default gql`
     updatedAt: String!
     name: String!
     data: String!
+  }
+
+  type Reports {
+    rows: [Report]!
+    count: Float!
+  }
+
+  type Report {
+    id: ID!
+    createdAt: String!
+    updatedAt: String!
+    name: String
   }
 `;

@@ -1,0 +1,43 @@
+@import '~$styles/constants.less';
+
+.custom-list {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+
+  .ant-list {
+    width: 1080px;
+    background-color: white;
+
+    .ant-list-item-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .left-section {
+        display: flex;
+        align-items: center;
+
+        .list-item-info {
+          display: flex;
+          flex-direction: column;
+          margin-left: 20px;
+
+          .list-item-name {
+            font-size: 16px;
+            color: black;
+          }
+
+          .list-item-op-time {
+            font-size: 12px;
+            color: @grey-7;
+
+            span + span {
+              margin-left: 24px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -30,8 +30,8 @@ export default React.memo(function(props: ApolloProviderProps) {
               }
 
               switch (extensions!.code) {
-                case 'INVALID_AUTHORIZATION':
-                  message.error(locale.error.invalidAuthorization);
+                case 'UNAUTHORIZED':
+                  message.error(locale.error.unauthorized);
                   setUser({
                     id: '',
                     username: '',
@@ -47,6 +47,12 @@ export default React.memo(function(props: ApolloProviderProps) {
                     locale.error.nonexistentUsernameOrWrongPassword,
                   );
                   break;
+                case 'REPORT_NOT_FOUND':
+                  message.error(locale.error.reportNotFound);
+                  break;
+                case 'DATA_SOURCE_NOT_FOUND':
+                  message.error(locale.error.dataSourceNotFound);
+                  break;
                 default:
                   message.error(errorMessage);
                   break;
@@ -57,7 +63,7 @@ export default React.memo(function(props: ApolloProviderProps) {
           }
         },
       }),
-    [user],
+    [user, locale],
   );
 
   return <ApolloProvider client={client}>{props.children}</ApolloProvider>;
