@@ -11,7 +11,8 @@ export const LocaleContext = React.createContext<{
   locale: Locale;
   setLocale: React.Dispatch<React.SetStateAction<Locale>>;
 }>({
-  locale: locales.en_US,
+  locale:
+    locales[window.localStorage.getItem('locale') || 'en_US'] || locales.en_US,
   // tslint:disable-next-line
   setLocale: () => {},
 });
@@ -34,7 +35,9 @@ interface LocaleProviderProps {
 export const LocaleProvider = React.memo(function LocaleProvider(
   props: LocaleProviderProps,
 ) {
-  const [locale, setLocale] = React.useState(locales.en_US);
+  const [locale, setLocale] = React.useState(
+    locales[window.localStorage.getItem('locale') || 'en_US'] || locales.en_US,
+  );
   const [antdLocale, setAntdLocale] = React.useState(antd_en_US);
   const LocaleContextValue = React.useMemo(() => ({ locale, setLocale }), [
     locale,
@@ -45,6 +48,8 @@ export const LocaleProvider = React.memo(function LocaleProvider(
 
     setAntdLocale(otherLocale.antd as any);
     moment.locale(otherLocale.moment);
+
+    window.localStorage.setItem('locale', locale.locale.key);
   }, [locale]);
 
   return (
