@@ -40,7 +40,7 @@ export interface Locale {
       unselectAll: string;
       deleteSelected: string;
       addChart: string;
-      addText: string;
+      text: string;
       lineChart: string;
       barChart: string;
     };

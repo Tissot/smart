@@ -81,20 +81,6 @@ export default class MouseEventController {
   }
 
   /**
-   * 点击取消选择按钮。
-   */
-  @bind
-  public onUnselectAllBtnClick() {
-    const { reportElsState, reportElsDispatch } = this._props;
-
-    reportElsDispatch({
-      type: ReportElsActionType.Unselect,
-      payload: reportElsState.map(reportEl => reportEl.id),
-      disallowUndo: true,
-    });
-  }
-
-  /**
    * 点击删除按钮。
    */
   @bind

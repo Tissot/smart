@@ -1,7 +1,12 @@
 import * as React from 'react';
-import { Layout, Menu, Dropdown, Button, Icon, Divider } from 'antd';
+import { Layout, Tooltip, Icon, Button, Divider, Menu, Dropdown } from 'antd';
 
 import { LocaleContext } from '$contexts/Locale';
+
+import { ReactComponent as UndoSvg } from '$assets/icons/undo.svg';
+import { ReactComponent as RedoSvg } from '$assets/icons/redo.svg';
+import { ReactComponent as SelectAllSvg } from '$assets/icons/select-all.svg';
+import { ReactComponent as TextSvg } from '$assets/icons/text.svg';
 
 import { MouseEventController } from '../../controllers';
 import { ReportChartType } from '../ReportElement';
@@ -51,39 +56,62 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
 
   return (
     <Header className="toolbar">
-      <Button
-        disabled={disableRedo}
-        onClick={mouseEventController.onRedoBtnClick}
-      >
-        {locale.user.report.redo}
-      </Button>
-      <Button
-        disabled={disableUndo}
-        onClick={mouseEventController.onUndoBtnClick}
-      >
-        {locale.user.report.undo}
-      </Button>
+      <div className="toolbar-btn">
+        <Tooltip title={locale.user.report.undo} placement="bottom">
+          <Button
+            disabled={disableUndo}
+            onClick={mouseEventController.onUndoBtnClick}
+          >
+            <Icon component={UndoSvg as any} />
+          </Button>
+        </Tooltip>
+      </div>
+      <div className="toolbar-btn">
+        <Tooltip title={locale.user.report.redo} placement="bottom">
+          <Button
+            disabled={disableRedo}
+            onClick={mouseEventController.onRedoBtnClick}
+          >
+            <Icon component={RedoSvg as any} />
+          </Button>
+        </Tooltip>
+      </div>
       <Divider type="vertical" />
-      <Button onClick={mouseEventController.onSelectAllBtnClick}>
-        {locale.user.report.selectAll}
-      </Button>
-      <Button onClick={mouseEventController.onUnselectAllBtnClick}>
-        {locale.user.report.unselectAll}
-      </Button>
+      <div className="toolbar-btn">
+        <Tooltip title={locale.user.report.selectAll} placement="bottom">
+          <Button onClick={mouseEventController.onSelectAllBtnClick}>
+            <Icon component={SelectAllSvg as any} />
+          </Button>
+        </Tooltip>
+      </div>
       <Divider type="vertical" />
-      <Dropdown overlay={addChartTypeMenu} trigger={['click']}>
-        <Button>
-          {locale.user.report.addChart} <Icon type="down" />
-        </Button>
-      </Dropdown>
+      <div className="toolbar-btn">
+        <Dropdown overlay={addChartTypeMenu} trigger={['click']}>
+          <Button>
+            <Icon type="bar-chart" /> {locale.user.report.addChart}{' '}
+            <Icon type="down" />
+          </Button>
+        </Dropdown>
+      </div>
       <Divider type="vertical" />
-      <Button onClick={mouseEventController.onAddTextBtnClick}>
-        {locale.user.report.addText}
-      </Button>
+      <div className="toolbar-btn">
+        <Tooltip title={locale.user.report.text} placement="bottom">
+          <Button onClick={mouseEventController.onAddTextBtnClick}>
+            <Icon component={TextSvg as any} />
+          </Button>
+        </Tooltip>
+      </div>
       <Divider type="vertical" />
-      <Button onClick={mouseEventController.onDeleteSelectedBtnClick}>
-        {locale.user.report.deleteSelected}
-      </Button>
+      <div className="toolbar-btn">
+        <Tooltip title={locale.user.report.deleteSelected} placement="bottom">
+          <Button
+            type="danger"
+            onClick={mouseEventController.onDeleteSelectedBtnClick}
+          >
+            <Icon type="delete" />
+          </Button>
+        </Tooltip>
+      </div>
     </Header>
   );
 });
