@@ -16,7 +16,7 @@ import {
 import chartAttr from '../widgets/ReportElement/chartAttr';
 
 interface MouseEventControllerProps {
-  reportEls: ReportEl[];
+  reportElsState: ReportEl[];
   reportElsDispatch: React.Dispatch<ReportElsAction>;
 }
 
@@ -71,11 +71,11 @@ export default class MouseEventController {
    */
   @bind
   public onSelectAllBtnClick() {
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     reportElsDispatch({
       type: ReportElsActionType.Select,
-      payload: reportEls.map(reportEl => reportEl.id),
+      payload: reportElsState.map(reportEl => reportEl.id),
       disallowUndo: true,
     });
   }
@@ -85,11 +85,11 @@ export default class MouseEventController {
    */
   @bind
   public onUnselectAllBtnClick() {
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     reportElsDispatch({
       type: ReportElsActionType.Unselect,
-      payload: reportEls.map(reportEl => reportEl.id),
+      payload: reportElsState.map(reportEl => reportEl.id),
       disallowUndo: true,
     });
   }
@@ -99,11 +99,11 @@ export default class MouseEventController {
    */
   @bind
   public onDeleteSelectedBtnClick() {
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     reportElsDispatch({
       type: ReportElsActionType.Delete,
-      payload: reportEls
+      payload: reportElsState
         .filter(reportEl => reportEl.selected)
         .map(reportElToDelete => reportElToDelete.id),
     });
@@ -185,11 +185,11 @@ export default class MouseEventController {
   public onCanvasContainerMouseUp(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     const { x, y } = this._canvasContainer.mouseDownPosition;
     const { clientX, clientY } = event;
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     x === clientX && y === clientY && reportElsDispatch({
       type: ReportElsActionType.Unselect,
-      payload: reportEls.map(reportEl => reportEl.id),
+      payload: reportElsState.map(reportEl => reportEl.id),
       disallowUndo: true,
     });
   }
@@ -204,12 +204,12 @@ export default class MouseEventController {
   // prettier-ignore
   @bind
   public onReportElMouseDown(reportElsId: string[], unselectOthers: boolean) {
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     if (unselectOthers) {
       reportElsDispatch({
         type: ReportElsActionType.Unselect,
-        payload: reportEls.map(reportEl => reportEl.id),
+        payload: reportElsState.map(reportEl => reportEl.id),
         disallowUndo: true,
       });
     }

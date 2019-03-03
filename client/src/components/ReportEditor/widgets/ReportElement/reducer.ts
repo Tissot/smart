@@ -83,40 +83,36 @@ export type ReportElsAction =
   | ReportElsUndoAction
   | ReportElsRedoAction;
 
-let undoStack: ReportElsAction[] = [];
-let redoStack: ReportElsAction[] = [];
+interface ReportEls {
+  undoStack: ReportElsAction[];
+  redoStack: ReportElsAction[];
+  state: ReportEl[];
+}
+
 const undoStackMaxLength = 10000;
 
-export function undoEnabled() {
-  return undoStack.length > 0;
-}
-
-export function redoEnabled() {
-  return redoStack.length > 0;
-}
-
-export function clearUndoRedo() {
-  undoStack = [];
-  redoStack = [];
-}
-
 export default function reportElsReducer(
-  reportEls: ReportEl[],
+  reportEls: ReportEls,
   action: ReportElsAction,
-): ReportEl[] {
+): ReportEls {
+  const { undoStack, redoStack } = reportEls;
   const originalActionType = action.type;
+  let newUndoStack: ReportElsAction[] = [];
+  let newRedoStack: ReportElsAction[] = [];
 
   switch (action.type) {
     case ReportElsActionType.Undo:
-      if (undoEnabled()) {
-        action = undoStack.pop()!;
+      if (undoStack.length > 0) {
+        action = undoStack[undoStack.length - 1];
+        newUndoStack = undoStack.slice(0, undoStack.length - 1);
       } else {
         return reportEls;
       }
       break;
     case ReportElsActionType.Redo:
-      if (redoEnabled()) {
-        action = redoStack.pop()!;
+      if (redoStack.length > 0) {
+        action = redoStack[redoStack.length - 1];
+        newRedoStack = redoStack.slice(0, redoStack.length - 1);
       } else {
         return reportEls;
       }
@@ -129,6 +125,7 @@ export default function reportElsReducer(
   if (action.payload.length === 0) return reportEls;
 
   let reverseAction: ReportElsAction | null = null;
+  let newReportElsState: ReportEl[];
 
   switch (action.type) {
     case ReportElsActionType.Add:
@@ -139,7 +136,7 @@ export default function reportElsReducer(
         ),
       };
 
-      reportEls = reportEls
+      newReportElsState = reportEls.state
         .map(reportEl => ({
           ...reportEl,
           selected: false,
@@ -149,19 +146,19 @@ export default function reportElsReducer(
     case ReportElsActionType.Delete:
       reverseAction = {
         type: ReportElsActionType.Add,
-        payload: reportEls.filter(
+        payload: reportEls.state.filter(
           reportEl => action.payload.indexOf(reportEl.id) !== -1,
         ),
       };
 
-      reportEls = reportEls.filter(
+      newReportElsState = reportEls.state.filter(
         reportEl => action.payload.indexOf(reportEl.id) === -1,
       );
       break;
     case ReportElsActionType.Move:
       reverseAction = {
         type: ReportElsActionType.Move,
-        payload: reportEls
+        payload: reportEls.state
           .filter(reportEl =>
             (action.payload as ReportElsMoveAction['payload']).some(
               reportElMoved => reportElMoved.id === reportEl.id,
@@ -174,7 +171,7 @@ export default function reportElsReducer(
           }),
       };
 
-      reportEls = reportEls.map(reportEl => {
+      newReportElsState = reportEls.state.map(reportEl => {
         for (const reportElMoved of action.payload as ReportElsMoveAction['payload']) {
           if (reportEl.id === reportElMoved.id) {
             const { x, y } = reportElMoved;
@@ -198,7 +195,7 @@ export default function reportElsReducer(
     case ReportElsActionType.Resize:
       reverseAction = {
         type: ReportElsActionType.Resize,
-        payload: reportEls
+        payload: reportEls.state
           .filter(reportEl =>
             (action.payload as ReportElsResizeAction['payload']).some(
               reportElResized => reportElResized.id === reportEl.id,
@@ -211,7 +208,7 @@ export default function reportElsReducer(
           }),
       };
 
-      reportEls = reportEls.map(reportEl => {
+      newReportElsState = reportEls.state.map(reportEl => {
         for (const reportElResized of action.payload as ReportElsResizeAction['payload']) {
           if (reportEl.id === reportElResized.id) {
             const { x, y, width, height } = reportElResized;
@@ -234,7 +231,7 @@ export default function reportElsReducer(
       });
       break;
     case ReportElsActionType.Select:
-      reportEls = reportEls.map(reportEl =>
+      newReportElsState = reportEls.state.map(reportEl =>
         (action.payload as ReportElsSelectAction['payload']).some(
           reportElSelectedId => reportEl.id === reportElSelectedId,
         )
@@ -246,7 +243,7 @@ export default function reportElsReducer(
       );
       break;
     case ReportElsActionType.Unselect:
-      reportEls = reportEls.map(reportEl =>
+      newReportElsState = reportEls.state.map(reportEl =>
         (action.payload as ReportElsSelectAction['payload']).some(
           reportElSelectedId => reportEl.id === reportElSelectedId,
         )
@@ -262,22 +259,28 @@ export default function reportElsReducer(
   }
 
   if (!reverseAction || action.disallowUndo) {
-    return reportEls;
+    return {
+      ...reportEls,
+      state: newReportElsState,
+    };
   }
 
   if (originalActionType === ReportElsActionType.Undo) {
-    redoStack.push(reverseAction);
+    newRedoStack = redoStack.concat(reverseAction);
   } else {
     if (originalActionType !== ReportElsActionType.Redo) {
-      redoStack = [];
-
-      if (undoStack.length === undoStackMaxLength) {
-        undoStack.shift();
-      }
+      newRedoStack = [];
     }
 
-    undoStack.push(reverseAction);
+    newUndoStack =
+      undoStack.length === undoStackMaxLength
+        ? undoStack.slice(1, undoStack.length).concat(reverseAction)
+        : undoStack.concat(reverseAction);
   }
 
-  return reportEls;
+  return {
+    undoStack: newUndoStack,
+    redoStack: newRedoStack,
+    state: newReportElsState,
+  };
 }

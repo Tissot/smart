@@ -9,13 +9,15 @@ import { ReportChartType } from '../ReportElement';
 import './index.less';
 
 interface ToolbarProps {
+  disableUndo: boolean;
+  disableRedo: boolean;
   mouseEventController: MouseEventController;
 }
 
 const { Header } = Layout;
 
 export default React.memo(function Toolbar(props: ToolbarProps) {
-  const { mouseEventController } = props;
+  const { mouseEventController, disableUndo, disableRedo } = props;
   const { locale } = React.useContext(LocaleContext);
 
   const reportChartTypeItems = [
@@ -49,10 +51,16 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
 
   return (
     <Header className="toolbar">
-      <Button onClick={mouseEventController.onRedoBtnClick}>
+      <Button
+        disabled={disableRedo}
+        onClick={mouseEventController.onRedoBtnClick}
+      >
         {locale.user.report.redo}
       </Button>
-      <Button onClick={mouseEventController.onUndoBtnClick}>
+      <Button
+        disabled={disableUndo}
+        onClick={mouseEventController.onUndoBtnClick}
+      >
         {locale.user.report.undo}
       </Button>
       <Divider type="vertical" />

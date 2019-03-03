@@ -2,14 +2,12 @@ import interact from 'interactjs';
 
 import bind from '$decorators/bind';
 
-import { ReportEl } from '../widgets/ReportElement';
 import {
   ReportElsAction,
   ReportElsActionType,
 } from '../widgets/ReportElement/reducer';
 
 interface InteractControllerProps {
-  reportEls: ReportEl[];
   reportElsDispatch: React.Dispatch<ReportElsAction>;
 }
 
@@ -47,13 +45,6 @@ export default class InteractController {
     interact(this._selector)
       .draggable(draggableOptions)
       .resizable(resizableOptions);
-  }
-
-  public update(partialProps: Partial<InteractControllerProps>) {
-    this._props = {
-      ...this._props,
-      ...partialProps,
-    };
   }
 
   public destroy() {

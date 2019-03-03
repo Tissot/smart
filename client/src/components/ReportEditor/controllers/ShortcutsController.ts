@@ -8,7 +8,7 @@ import {
 import customMetaKey from '$utils/customMetaKEey';
 
 interface ShortCutsControllerProps {
-  reportEls: ReportEl[];
+  reportElsState: ReportEl[];
   reportElsDispatch: React.Dispatch<ReportElsAction>;
 }
 
@@ -36,7 +36,7 @@ export default class ShortCutsController {
 
   @bind
   private _onKeydown(event: KeyboardEvent) {
-    const { reportEls, reportElsDispatch } = this._props;
+    const { reportElsState, reportElsDispatch } = this._props;
 
     switch (event.keyCode) {
       // delete
@@ -50,7 +50,7 @@ export default class ShortCutsController {
         event.preventDefault();
         reportElsDispatch({
           type: ReportElsActionType.Delete,
-          payload: reportEls
+          payload: reportElsState
             .filter(reportEl => reportEl.selected)
             .map(selectedReportEl => selectedReportEl.id),
         });
@@ -60,7 +60,7 @@ export default class ShortCutsController {
         event.preventDefault();
         reportElsDispatch({
           type: ReportElsActionType.Move,
-          payload: reportEls
+          payload: reportElsState
             .filter(reportEl => reportEl.selected)
             .map(reportElSelected => ({
               id: reportElSelected.id,
@@ -74,7 +74,7 @@ export default class ShortCutsController {
         event.preventDefault();
         reportElsDispatch({
           type: ReportElsActionType.Move,
-          payload: reportEls
+          payload: reportElsState
             .filter(reportEl => reportEl.selected)
             .map(reportElSelected => ({
               id: reportElSelected.id,
@@ -88,7 +88,7 @@ export default class ShortCutsController {
         event.preventDefault();
         reportElsDispatch({
           type: ReportElsActionType.Move,
-          payload: reportEls
+          payload: reportElsState
             .filter(reportEl => reportEl.selected)
             .map(reportElSelected => ({
               id: reportElSelected.id,
@@ -102,7 +102,7 @@ export default class ShortCutsController {
         event.preventDefault();
         reportElsDispatch({
           type: ReportElsActionType.Move,
-          payload: reportEls
+          payload: reportElsState
             .filter(reportEl => reportEl.selected)
             .map(reportElSelected => ({
               id: reportElSelected.id,
@@ -119,12 +119,12 @@ export default class ShortCutsController {
           event.shiftKey
             ? reportElsDispatch({
                 type: ReportElsActionType.Unselect,
-                payload: reportEls.map(reportEl => reportEl.id),
+                payload: reportElsState.map(reportEl => reportEl.id),
                 disallowUndo: true,
               })
             : reportElsDispatch({
                 type: ReportElsActionType.Select,
-                payload: reportEls.map(reportEl => reportEl.id),
+                payload: reportElsState.map(reportEl => reportEl.id),
                 disallowUndo: true,
               });
         }

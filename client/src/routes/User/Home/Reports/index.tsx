@@ -79,7 +79,7 @@ export default React.memo(function Reports(props: ReportsProps) {
   );
   const handleListItemClick = React.useCallback(
     (id: string) =>
-      props.navigate!(AbsoluteRoute.User.Report.replace('reportId', id)),
+      props.navigate!(AbsoluteRoute.User.Report.replace(':reportId', id)),
     [],
   );
   const reportNameFormatter = React.useCallback(

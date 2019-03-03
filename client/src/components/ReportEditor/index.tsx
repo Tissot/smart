@@ -4,7 +4,6 @@ import { Layout } from 'antd';
 import ReportElement from './widgets/ReportElement';
 import reportElsReducer, {
   ReportElsActionType,
-  clearUndoRedo,
 } from './widgets/ReportElement/reducer';
 import Toolbar from './widgets/Toolbar';
 import ConfigPanel from './widgets/ConfigPanel';
@@ -23,21 +22,30 @@ const { Content } = Layout;
 export default React.memo(function ReportEditor() {
   const reportCanvasRef = React.useRef<HTMLDivElement>(null);
   // prettier-ignore
-  const [reportEls, reportElsDispatch] = React.useReducer(reportElsReducer, []);
+  const [reportEls, reportElsDispatch] = React.useReducer(reportElsReducer, {
+    undoStack: [],
+    redoStack: [],
+    state: [],
+  });
   const controller = React.useMemo(
     () => ({
       g: new GController(),
-      interact: new InteractController({ reportEls, reportElsDispatch }),
-      shortcuts: new ShortcutsController({ reportEls, reportElsDispatch }),
-      mouseEvent: new MouseEventController({ reportEls, reportElsDispatch }),
+      interact: new InteractController({ reportElsDispatch }),
+      shortcuts: new ShortcutsController({
+        reportElsState: reportEls.state,
+        reportElsDispatch,
+      }),
+      mouseEvent: new MouseEventController({
+        reportElsState: reportEls.state,
+        reportElsDispatch,
+      }),
     }),
     [],
   );
 
   React.useEffect(() => {
-    controller.interact.update({ reportEls });
-    controller.shortcuts.update({ reportEls });
-    controller.mouseEvent.update({ reportEls });
+    controller.shortcuts.update({ reportElsState: reportEls.state });
+    controller.mouseEvent.update({ reportElsState: reportEls.state });
   }, [reportEls]);
 
   React.useEffect(() => {
@@ -53,13 +61,16 @@ export default React.memo(function ReportEditor() {
       controller.interact.destroy();
       controller.shortcuts.destroy();
       controller.mouseEvent.destroy();
-      clearUndoRedo();
     };
   }, []);
 
   return (
     <Layout className="report-editor">
-      <Toolbar mouseEventController={controller.mouseEvent} />
+      <Toolbar
+        disableUndo={reportEls.undoStack.length === 0}
+        disableRedo={reportEls.redoStack.length === 0}
+        mouseEventController={controller.mouseEvent}
+      />
       <Layout>
         <Content
           className="report-canvas-container"
@@ -67,7 +78,7 @@ export default React.memo(function ReportEditor() {
           onMouseUp={controller.mouseEvent.onCanvasContainerMouseUp}
         >
           <div ref={reportCanvasRef} id="report-canvas" />
-          {reportEls.map(reportEl => (
+          {reportEls.state.map(reportEl => (
             <ReportElement
               key={reportEl.id}
               {...reportEl}

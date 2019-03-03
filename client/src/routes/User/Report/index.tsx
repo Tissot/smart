@@ -6,8 +6,6 @@ import { AbsoluteRoute } from '$routes/index';
 
 import ReportEditor from '$components/ReportEditor';
 
-import './index.less';
-
 const { Header } = Layout;
 
 interface ReportProps {
