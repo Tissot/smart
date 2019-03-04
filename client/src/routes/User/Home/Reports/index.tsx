@@ -55,13 +55,14 @@ const reportIcon = (
 export default React.memo(function Reports(props: ReportsProps) {
   const { locale } = React.useContext(LocaleContext);
   const { navigate } = props;
-  const reportsHeader = React.useMemo(
-    () => (
+  const reportsHeader = React.useCallback(
+    ({ refetch }) => (
       <Mutation
         mutation={ADD_REPORT}
-        onCompleted={({ addReport: { id } }) =>
-          navigate!(AbsoluteRoute.User.Report.replace(':reportId', id))
-        }
+        onCompleted={async({ addReport: { id } }) => {
+          await refetch();
+          navigate!(AbsoluteRoute.User.Report.replace(':reportId', id));
+        }}
       >
         {(addReport, { loading }) => (
           <Button

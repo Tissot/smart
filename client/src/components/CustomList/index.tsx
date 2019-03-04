@@ -7,7 +7,6 @@ import { LocaleContext } from '$contexts/Locale';
 
 import Loading from '$components/Loading';
 import Error from '$components/Error';
-import DoActionOnMount from '$components/DoActionOnMount';
 
 import './index.less';
 
@@ -59,7 +58,6 @@ export default React.memo(function CustomList(props: CustomListProps) {
 
         return (
           <div className="custom-list">
-            <DoActionOnMount doAction={refetch} />
             <List
               header={header}
               bordered
@@ -78,12 +76,12 @@ export default React.memo(function CustomList(props: CustomListProps) {
                   <div className="left-section">
                     {itemIcon}
                     <div className="list-item-info">
-                      <span className="list-item-name">
+                      <span className="title">
                         {itemNameFormatter
                           ? itemNameFormatter(item.name)
                           : item.name}
                       </span>
-                      <div className="list-item-op-time">
+                      <div className="detail">
                         <span>
                           {locale.common.createdAt}:{' '}
                           {moment(item.createdAt).format('lll')}
