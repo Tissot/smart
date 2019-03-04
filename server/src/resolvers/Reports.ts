@@ -1,29 +1,41 @@
 import { Config } from 'apollo-server';
 
+import { Report } from '../store';
+
 interface ReportsQuery {
   // getReportById(
   //   parent: any,
   //   args: { id: string },
   //   context: Config['context'],
   //   info: any,
-  // ): any;
-  getReports(parent: any, args: {}, context: Config['context'], info: any): any;
+  // ): Promise<Report>;
+  getReports(
+    parent: any,
+    args: {},
+    context: Config['context'],
+    info: any,
+  ): Promise<Report[]>;
 }
 
 interface ReportsMutation {
-  addReport(parent: any, args: {}, context: Config['context'], info: any): any;
+  addReport(
+    parent: any,
+    args: {},
+    context: Config['context'],
+    info: any,
+  ): Promise<Report>;
   removeReport(
     parent: any,
     args: { id: string },
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<boolean>;
   // renameReport(
   //   parent: any,
   //   args: { id: string; name: string },
   //   context: Config['context'],
   //   info: any,
-  // ): any;
+  // ): boolean;
 }
 
 export const reportsQuery: ReportsQuery = {

@@ -1,24 +1,26 @@
 import { UserInputError, Config } from 'apollo-server';
 
+import { User } from '../store';
+
 interface UsersMutation {
   signUp(
     parent: any,
     args: { username: string; password: string },
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<User>;
   signInByPassword(
     parent: any,
     args: { username: string; password: string },
     context: Config['context'],
-    info: any,
+    info: Promise<User>,
   ): any;
   signInByToken(
     parent: any,
     args: { id: string; token: string },
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<User>;
 }
 
 export const userMutation: UsersMutation = {

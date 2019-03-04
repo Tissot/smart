@@ -47,9 +47,11 @@ export default class Reports extends DataSource {
 
   public async addReport() {
     const ownerId = this._context.user.id;
+    const elements = JSON.stringify([]);
 
     const report = await this._store.reports.create({
       ownerId,
+      elements,
     } as any);
 
     return report.get();

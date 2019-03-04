@@ -1,12 +1,14 @@
 import { Config } from 'apollo-server';
 
+import { DataSource } from '../store';
+
 interface DataSourcesQuery {
   getDataSources(
     parent: any,
     args: {},
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<DataSource[]>;
 }
 
 interface DataSourcesMutation {
@@ -15,13 +17,13 @@ interface DataSourcesMutation {
     args: { name: string; data: string },
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<DataSource>;
   removeDataSource(
     parent: any,
     args: { id: string },
     context: Config['context'],
     info: any,
-  ): any;
+  ): Promise<boolean>;
 }
 
 export const dataSourcesQuery: DataSourcesQuery = {

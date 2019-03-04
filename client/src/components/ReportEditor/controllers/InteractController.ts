@@ -39,7 +39,6 @@ export default class InteractController {
       restrictSize: {
         min: { width: 10, height: 10 },
       },
-      inertia: true,
     };
 
     interact(this._selector)
