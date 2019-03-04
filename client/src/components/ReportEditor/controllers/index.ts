@@ -1,11 +1,6 @@
 import GController from './GController';
 import InteractController from './InteractController';
-import ShortcutsController from './ShortcutsController';
-import MouseEventController from './MouseEventController';
+import KeyboardController from './KeyboardController';
+import MouseController from './MouseController';
 
-export {
-  GController,
-  InteractController,
-  ShortcutsController,
-  MouseEventController,
-};
+export { GController, InteractController, KeyboardController, MouseController };

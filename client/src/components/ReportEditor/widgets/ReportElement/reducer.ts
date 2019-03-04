@@ -7,6 +7,7 @@ export enum ReportElsActionType {
   Resize = 'resize',
   Select = 'select',
   Unselect = 'unselect',
+  TextInput = 'textInput',
   Undo = 'undo',
   Redo = 'redo',
 }
@@ -20,13 +21,11 @@ interface ReportElsCommonAction {
 interface ReportElsAddAction extends ReportElsCommonAction {
   type: ReportElsActionType.Add;
   payload: ReportEl[];
-  disallowUndo?: boolean;
 }
 
 interface ReportElsDeleteAction extends ReportElsCommonAction {
   type: ReportElsActionType.Delete;
   payload: string[];
-  disallowUndo?: boolean;
 }
 
 interface ReportElsMoveAction extends ReportElsCommonAction {
@@ -36,7 +35,6 @@ interface ReportElsMoveAction extends ReportElsCommonAction {
     x: number;
     y: number;
   }[];
-  disallowUndo?: boolean;
 }
 
 interface ReportElsResizeAction extends ReportElsCommonAction {
@@ -48,7 +46,6 @@ interface ReportElsResizeAction extends ReportElsCommonAction {
     width: number;
     height: number;
   }[];
-  disallowUndo?: boolean;
 }
 
 interface ReportElsSelectAction extends ReportElsCommonAction {
@@ -61,6 +58,11 @@ interface ReportElsUnselectAction extends ReportElsCommonAction {
   type: ReportElsActionType.Unselect;
   payload: string[];
   disallowUndo: true;
+}
+
+interface TextInputAction extends ReportElsCommonAction {
+  type: ReportElsActionType.TextInput;
+  payload: { id: string; data: string };
 }
 
 interface ReportElsUndoAction extends ReportElsCommonAction {
@@ -80,6 +82,7 @@ export type ReportElsAction =
   | ReportElsResizeAction
   | ReportElsSelectAction
   | ReportElsUnselectAction
+  | TextInputAction
   | ReportElsUndoAction
   | ReportElsRedoAction;
 
@@ -253,6 +256,28 @@ export default function reportElsReducer(
             }
           : reportEl,
       );
+      break;
+    case ReportElsActionType.TextInput:
+      reverseAction = {
+        type: ReportElsActionType.TextInput,
+        payload: {
+          id: action.payload.id,
+          data: reportEls.state.filter(
+            reportEl => reportEl.id === action.payload.id,
+          )[0].data,
+        },
+      };
+
+      newReportElsState = reportEls.state.map(reportEl => {
+        if (reportEl.id === action.payload.id) {
+          return {
+            ...reportEl,
+            data: action.payload.data,
+          };
+        }
+
+        return reportEl;
+      });
       break;
     default:
       throw new Error(`Unexcepted action type ${action.type}`);

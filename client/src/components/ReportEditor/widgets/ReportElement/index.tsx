@@ -6,7 +6,8 @@ import Text from '$components/Text';
 
 import customMetaKey from '$utils/customMetaKEey';
 
-import MouseEventController from '../../controllers/MouseEventController';
+import MouseController from '../../controllers/MouseController';
+import KeyboardController from '../../controllers/KeyboardController';
 
 import './index.less';
 
@@ -46,7 +47,8 @@ interface ReportText extends ReportCommonEl {
 export type ReportEl = ReportChart | ReportText;
 
 type ReportElementProps = ReportEl & {
-  mouseEventController: MouseEventController;
+  mouseController: MouseController;
+  keyboardController: KeyboardController;
 };
 
 // 与 './index.less' 中的 @report-element-selected-border-width 保持同步。
@@ -62,45 +64,38 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
     height,
     data,
     selected,
-    mouseEventController,
+    mouseController,
+    keyboardController,
   } = props;
-  const reportElWidth = React.useMemo(
-    () => width + reportElSelectedBorderWidth * 2,
-    [width],
-  );
-  const reportElHeight = React.useMemo(
-    () =>
-      height +
-      (type === ReportElType.Chart ? 6 : 0) +
-      reportElSelectedBorderWidth * 2,
-    [height],
-  );
 
   return (
     <div
       style={{
-        width: reportElWidth,
-        height: reportElHeight,
+        width: width + reportElSelectedBorderWidth * 2,
+        height:
+          height +
+          (type === ReportElType.Chart ? 6 : 0) +
+          reportElSelectedBorderWidth * 2,
         transform: `translate(${x}px, ${y}px)`,
       }}
-      className={`report-element ${selected ? 'report-element-selected' : ''}`}
+      className={`report-element${selected ? ' report-element-selected' : ''}`}
       id={id}
       data-x={x}
       data-y={y}
       onMouseMove={
         type === ReportElType.Chart
-          ? mouseEventController.onReportElMouseMove
+          ? mouseController.onReportElMouseMove
           : undefined
       }
       onMouseDown={React.useCallback(
         (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-          mouseEventController.onReportElMouseDown(
+          mouseController.onReportElMouseDown(
             [id],
             !customMetaKey({ ctrlKey: event.ctrlKey, metaKey: event.metaKey }),
           ),
         [id],
       )}
-      onMouseUp={mouseEventController.onReportElMouseUp}
+      onMouseUp={mouseController.onReportElMouseUp}
     >
       {(() => {
         switch (props.type) {
@@ -130,7 +125,13 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
                 throw new Error(`Invalid reportEl chartType ${props.chartType}.`);
             }
           case ReportElType.Text:
-            return <Text data={data} />;
+            return (
+              <Text
+                id={id}
+                data={data}
+                onInputUpdate={keyboardController._onTextInputUpdate}
+              />
+            );
           default:
             // prettier-ignore
             throw new Error(`Invalid reportEl type ${(props as any).type}.`);

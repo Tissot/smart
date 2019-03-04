@@ -8,7 +8,7 @@ import { ReactComponent as RedoSvg } from '$assets/icons/redo.svg';
 import { ReactComponent as SelectAllSvg } from '$assets/icons/select-all.svg';
 import { ReactComponent as TextSvg } from '$assets/icons/text.svg';
 
-import { MouseEventController } from '../../controllers';
+import { MouseController } from '../../controllers';
 import { ReportChartType } from '../ReportElement';
 
 import './index.less';
@@ -16,13 +16,13 @@ import './index.less';
 interface ToolbarProps {
   disableUndo: boolean;
   disableRedo: boolean;
-  mouseEventController: MouseEventController;
+  mouseController: MouseController;
 }
 
 const { Header } = Layout;
 
 export default React.memo(function Toolbar(props: ToolbarProps) {
-  const { mouseEventController, disableUndo, disableRedo } = props;
+  const { mouseController, disableUndo, disableRedo } = props;
   const { locale } = React.useContext(LocaleContext);
 
   const reportChartTypeItems = [
@@ -41,10 +41,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
         <Menu.Item
           key={reportChartTypeItem.key}
           onClick={React.useCallback(
-            () =>
-              mouseEventController.onChartListItemClick(
-                reportChartTypeItem.key,
-              ),
+            () => mouseController.onChartListItemClick(reportChartTypeItem.key),
             [reportChartTypeItem.key],
           )}
         >
@@ -60,7 +57,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
         <Tooltip title={locale.user.report.undo} placement="bottom">
           <Button
             disabled={disableUndo}
-            onClick={mouseEventController.onUndoBtnClick}
+            onClick={mouseController.onUndoBtnClick}
           >
             <Icon component={UndoSvg as any} />
           </Button>
@@ -70,7 +67,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
         <Tooltip title={locale.user.report.redo} placement="bottom">
           <Button
             disabled={disableRedo}
-            onClick={mouseEventController.onRedoBtnClick}
+            onClick={mouseController.onRedoBtnClick}
           >
             <Icon component={RedoSvg as any} />
           </Button>
@@ -79,7 +76,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
       <Divider type="vertical" />
       <div className="toolbar-btn">
         <Tooltip title={locale.user.report.selectAll} placement="bottom">
-          <Button onClick={mouseEventController.onSelectAllBtnClick}>
+          <Button onClick={mouseController.onSelectAllBtnClick}>
             <Icon component={SelectAllSvg as any} />
           </Button>
         </Tooltip>
@@ -96,7 +93,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
       <Divider type="vertical" />
       <div className="toolbar-btn">
         <Tooltip title={locale.user.report.text} placement="bottom">
-          <Button onClick={mouseEventController.onAddTextBtnClick}>
+          <Button onClick={mouseController.onAddTextBtnClick}>
             <Icon component={TextSvg as any} />
           </Button>
         </Tooltip>
@@ -106,7 +103,7 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
         <Tooltip title={locale.user.report.deleteSelected} placement="bottom">
           <Button
             type="danger"
-            onClick={mouseEventController.onDeleteSelectedBtnClick}
+            onClick={mouseController.onDeleteSelectedBtnClick}
           >
             <Icon type="delete" />
           </Button>

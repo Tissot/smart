@@ -35,6 +35,14 @@ export default class ShortCutsController {
   }
 
   @bind
+  public _onTextInputUpdate(id: string, data: string) {
+    this._props.reportElsDispatch({
+      type: ReportElsActionType.TextInput,
+      payload: { id, data },
+    });
+  }
+
+  @bind
   private _onKeydown(event: KeyboardEvent) {
     const { reportElsState, reportElsDispatch } = this._props;
 

@@ -15,7 +15,7 @@ import {
 // ToDo: delete
 import chartAttr from '../widgets/ReportElement/chartAttr';
 
-interface MouseEventControllerProps {
+interface MouseControllerProps {
   reportElsState: ReportEl[];
   reportElsDispatch: React.Dispatch<ReportElsAction>;
 }
@@ -24,17 +24,17 @@ interface CanvasContainer {
   mouseDownPosition: { x: number; y: number };
 }
 
-export default class MouseEventController {
-  private _props: MouseEventControllerProps;
+export default class MouseController {
+  private _props: MouseControllerProps;
   private _canvasContainer: CanvasContainer = {
     mouseDownPosition: { x: 0, y: 0 },
   };
 
-  public constructor(props: MouseEventControllerProps) {
+  public constructor(props: MouseControllerProps) {
     this._props = props;
   }
 
-  public update(partialProps: Partial<MouseEventControllerProps>) {
+  public update(partialProps: Partial<MouseControllerProps>) {
     this._props = {
       ...this._props,
       ...partialProps,
@@ -115,7 +115,7 @@ export default class MouseEventController {
           height: 100,
           x: 0,
           y: 0,
-          data: '请在此输入文本。',
+          data: '',
           selected: true,
         },
       ],

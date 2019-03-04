@@ -11,8 +11,8 @@ import ConfigPanel from './widgets/ConfigPanel';
 import {
   GController,
   InteractController,
-  ShortcutsController,
-  MouseEventController,
+  KeyboardController,
+  MouseController,
 } from './controllers';
 
 import './index.less';
@@ -31,11 +31,11 @@ export default React.memo(function ReportEditor() {
     () => ({
       g: new GController(),
       interact: new InteractController({ reportElsDispatch }),
-      shortcuts: new ShortcutsController({
+      keyboard: new KeyboardController({
         reportElsState: reportEls.state,
         reportElsDispatch,
       }),
-      mouseEvent: new MouseEventController({
+      mouse: new MouseController({
         reportElsState: reportEls.state,
         reportElsDispatch,
       }),
@@ -44,8 +44,8 @@ export default React.memo(function ReportEditor() {
   );
 
   React.useEffect(() => {
-    controller.shortcuts.update({ reportElsState: reportEls.state });
-    controller.mouseEvent.update({ reportElsState: reportEls.state });
+    controller.keyboard.update({ reportElsState: reportEls.state });
+    controller.mouse.update({ reportElsState: reportEls.state });
   }, [reportEls]);
 
   React.useEffect(() => {
@@ -59,8 +59,8 @@ export default React.memo(function ReportEditor() {
     return () => {
       controller.g.destroy();
       controller.interact.destroy();
-      controller.shortcuts.destroy();
-      controller.mouseEvent.destroy();
+      controller.keyboard.destroy();
+      controller.mouse.destroy();
     };
   }, []);
 
@@ -69,20 +69,21 @@ export default React.memo(function ReportEditor() {
       <Toolbar
         disableUndo={reportEls.undoStack.length === 0}
         disableRedo={reportEls.redoStack.length === 0}
-        mouseEventController={controller.mouseEvent}
+        mouseController={controller.mouse}
       />
       <Layout>
         <Content
           className="report-canvas-container"
-          onMouseDown={controller.mouseEvent.onCanvasContainerMouseDown}
-          onMouseUp={controller.mouseEvent.onCanvasContainerMouseUp}
+          onMouseDown={controller.mouse.onCanvasContainerMouseDown}
+          onMouseUp={controller.mouse.onCanvasContainerMouseUp}
         >
           <div ref={reportCanvasRef} id="report-canvas" />
           {reportEls.state.map(reportEl => (
             <ReportElement
               key={reportEl.id}
               {...reportEl}
-              mouseEventController={controller.mouseEvent}
+              mouseController={controller.mouse}
+              keyboardController={controller.keyboard}
             />
           ))}
         </Content>
