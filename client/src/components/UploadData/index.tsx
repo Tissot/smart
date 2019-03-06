@@ -44,18 +44,50 @@ function UploadData(props: UploadDataProps) {
     fileReader.readAsText(file);
     fileReader.onload = function(event: FileReaderEventMap['load']) {
       if (event.target) {
-        const data = (event.target as any).result;
-        const dataSetView = new DataSet.View().source(data, {
-          type: 'csv',
-        });
+        if (file.type === 'application/json') {
+          uploadData &&
+            uploadData({
+              variables: {
+                name: file.name,
+                data: (event.target as any).result,
+              },
+            });
+        }
 
-        uploadData &&
-          uploadData({
-            variables: {
-              name: file.name,
-              data: JSON.stringify(dataSetView.rows),
-            },
-          });
+        if (file.type === 'text/csv') {
+          const dataView = new DataSet.View()
+            .source((event.target as any).result, {
+              type: 'csv',
+            })
+            // 上传数据类型自动转换，优先级: Number > Text。
+            .transform({
+              type: 'map',
+              callback(row: any) {
+                const result = {};
+
+                for (const key in row) {
+                  const valueToNumber = Number(row[key]);
+
+                  if (!Number.isNaN(valueToNumber)) {
+                    result[key] = valueToNumber;
+                    continue;
+                  }
+
+                  result[key] = row[key];
+                }
+
+                return result;
+              },
+            });
+
+          uploadData &&
+            uploadData({
+              variables: {
+                name: file.name,
+                data: JSON.stringify(dataView.rows),
+              },
+            });
+        }
       }
     };
 
@@ -63,7 +95,11 @@ function UploadData(props: UploadDataProps) {
   }, []);
 
   return (
-    <Upload accept=".csv" showUploadList={false} beforeUpload={beforeUpload}>
+    <Upload
+      accept=".csv,.json"
+      showUploadList={false}
+      beforeUpload={beforeUpload}
+    >
       <Button>
         <Icon type="upload" />
         {locale.user.home.dataSources.addDataSource}
