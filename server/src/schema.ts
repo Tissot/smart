@@ -5,8 +5,8 @@ export default gql`
     # DataSource
     getDataSources: DataSources!
     # Report
-    # getReportById: Report!
-    getReports: Reports!
+    getReport(id: ID!): Report!
+    getAllReports: Reports!
   }
 
   type Mutation {
@@ -20,7 +20,8 @@ export default gql`
     # Report
     addReport: Report!
     removeReport(id: ID!): Boolean!
-    # renameReport(id: ID!, name: String!): Boolean!
+    renameReport(id: ID!, name: String!): Boolean!
+    saveReportEls(id: ID!, elements: String!): Boolean!
   }
 
   type User {
@@ -54,5 +55,6 @@ export default gql`
     createdAt: String!
     updatedAt: String!
     name: String
+    elements: String!
   }
 `;

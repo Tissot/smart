@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Layout } from 'antd';
 
-import ReportElement from './widgets/ReportElement';
-import reportElsReducer, {
-  ReportElsActionType,
-} from './widgets/ReportElement/reducer';
-import Toolbar from './widgets/Toolbar';
-import ConfigPanel from './widgets/ConfigPanel';
+import customMetaKey from '$utils/customMetaKEey';
 
 import {
   GController,
@@ -15,18 +10,46 @@ import {
   MouseController,
 } from './controllers';
 
+import ReportElement, { ReportEl, ReportElType } from './widgets/ReportElement';
+import reportElsReducer, {
+  ReportElsActionType,
+} from './widgets/ReportElement/reducer';
+import Toolbar from './widgets/Toolbar';
+import ConfigPanel from './widgets/ConfigPanel';
+
 import './index.less';
 
 const { Content } = Layout;
 
-export default React.memo(function ReportEditor() {
+interface ReportEditorProps {
+  initialEls: ReportEl[];
+  dataSources: {
+    rows: {
+      id: string;
+      name: string;
+      data: any[];
+    }[];
+    count: number;
+  };
+  onSave(reportELs: ReportEl[]): void;
+}
+
+function ReportEditor(props: ReportEditorProps) {
+  const { initialEls, dataSources, onSave } = props;
   const reportCanvasRef = React.useRef<HTMLDivElement>(null);
-  // prettier-ignore
-  const [reportEls, reportElsDispatch] = React.useReducer(reportElsReducer, {
-    undoStack: [],
-    redoStack: [],
-    state: [],
-  });
+  const [reportEls, reportElsDispatch] = React.useReducer(
+    reportElsReducer,
+    {
+      undoStack: [],
+      redoStack: [],
+      state: [],
+    },
+    {
+      type: ReportElsActionType.Add,
+      payload: initialEls,
+      disallowUndo: true,
+    },
+  );
   const controller = React.useMemo(
     () => ({
       g: new GController(),
@@ -34,6 +57,7 @@ export default React.memo(function ReportEditor() {
       keyboard: new KeyboardController({
         reportElsState: reportEls.state,
         reportElsDispatch,
+        onSave,
       }),
       mouse: new MouseController({
         reportElsState: reportEls.state,
@@ -42,11 +66,20 @@ export default React.memo(function ReportEditor() {
     }),
     [],
   );
+  const editingReportEl = React.useMemo(() => {
+    for (const reportEl of reportEls.state) {
+      if (reportEl.editing) {
+        return reportEl;
+      }
+    }
+
+    return null;
+  }, [reportEls.state]);
 
   React.useEffect(() => {
     controller.keyboard.update({ reportElsState: reportEls.state });
     controller.mouse.update({ reportElsState: reportEls.state });
-  }, [reportEls]);
+  }, [reportEls.state]);
 
   React.useEffect(() => {
     reportElsDispatch({
@@ -69,7 +102,15 @@ export default React.memo(function ReportEditor() {
       <Toolbar
         disableUndo={reportEls.undoStack.length === 0}
         disableRedo={reportEls.redoStack.length === 0}
-        mouseController={controller.mouse}
+        disableDelete={
+          reportEls.state.filter(reportEl => reportEl.selected).length === 0
+        }
+        onUndoBtnClick={controller.mouse.onUndoBtnClick}
+        onRedoBtnClick={controller.mouse.onRedoBtnClick}
+        onSelectAllBtnClick={controller.mouse.onSelectAllBtnClick}
+        onChartListItemClick={controller.mouse.onChartListItemClick}
+        onAddTextBtnClick={controller.mouse.onAddTextBtnClick}
+        onDeleteSelectedBtnClick={controller.mouse.onDeleteSelectedBtnClick}
       />
       <Layout>
         <Content
@@ -82,13 +123,46 @@ export default React.memo(function ReportEditor() {
             <ReportElement
               key={reportEl.id}
               {...reportEl}
-              mouseController={controller.mouse}
-              keyboardController={controller.keyboard}
+              onMouseMove={
+                reportEl.type === ReportElType.Chart
+                  ? controller.mouse.onReportElMouseMove
+                  : undefined
+              }
+              // onMouseDown 用 useCallBack 按删除会报错。
+              onMouseDown={(
+                event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+              ) =>
+                controller.mouse.onReportElMouseDown(
+                  reportEl.id,
+                  !customMetaKey({
+                    ctrlKey: event.ctrlKey,
+                    metaKey: event.metaKey,
+                  }),
+                )
+              }
+              onMouseUp={controller.mouse.onReportElMouseUp}
+              // onInputText 用 useCallBack 按删除会报错。
+              onInputText={
+                reportEl.type === ReportElType.Text
+                  ? (event: any) =>
+                      controller.keyboard._onInputText(
+                        reportEl.id,
+                        event.target.value,
+                      )
+                  : undefined
+              }
             />
           ))}
         </Content>
-        <ConfigPanel />
+        <ConfigPanel
+          editingReportEl={editingReportEl}
+          dataSources={dataSources}
+          onChartDataSourceSelect={controller.mouse.onChartDataSourceSelect}
+          onChartOptionsChange={controller.mouse.onChartOptionsChange}
+        />
       </Layout>
     </Layout>
   );
-});
+}
+
+export default React.memo(ReportEditor);

@@ -45,7 +45,7 @@ export default React.memo(function Routes(props) {
     user: { id, username, token, hasSignedIn },
     setUser,
   } = React.useContext(UserContext);
-  const onMutationCompleted = React.useCallback(({ signInByToken }) => {
+  const onSignInByTokenCompleted = React.useCallback(({ signInByToken }) => {
     const { id, username, token } = signInByToken;
     setUser({ id, username, token, hasSignedIn: true });
   }, []);
@@ -58,7 +58,7 @@ export default React.memo(function Routes(props) {
           id,
           token,
         }}
-        onCompleted={onMutationCompleted}
+        onCompleted={onSignInByTokenCompleted}
       >
         {(signInByToken, { loading, error }) => {
           if (!id || !username || !token) {

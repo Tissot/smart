@@ -93,7 +93,6 @@
     "switch-default": true,
     "unnecessary-constructor": true,
     "use-isnan": true,
-    "cyclomatic-complexity": true,
     "eofline": true,
     "deprecation": true,
     "indent": [true, "spaces", 2],

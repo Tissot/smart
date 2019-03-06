@@ -39,10 +39,14 @@ export interface Locale {
       selectAll: string;
       unselectAll: string;
       deleteSelected: string;
-      addChart: string;
+      chart: string;
       text: string;
       lineChart: string;
       barChart: string;
+      scatterChart: string;
+      textEmptyTips: string;
+      isXAxisTime: string;
+      isLineSmooth: string;
     };
   };
   error: {
@@ -52,6 +56,7 @@ export interface Locale {
     reportNotFound: string;
     dataSourceNotFound: string;
     networkError: string;
+    fileContentError: string;
   };
   notFound: string;
 }

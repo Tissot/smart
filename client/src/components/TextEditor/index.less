@@ -1,0 +1,13 @@
+@import '~antd/lib/style/themes/default.less';
+
+.text-editor {
+  width: 100%;
+  height: 100%;
+  outline: 0;
+  overflow-wrap: break-word;
+
+  &:empty:before {
+    content: attr(placeholder);
+    display: block;
+  }
+}

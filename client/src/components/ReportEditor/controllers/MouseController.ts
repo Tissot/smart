@@ -6,14 +6,13 @@ import {
   ReportEl,
   ReportElType,
   ReportChartType,
+  ReportChartDataSource,
+  ReportChartOptions,
 } from '../widgets/ReportElement';
 import {
   ReportElsActionType,
   ReportElsAction,
 } from '../widgets/ReportElement/reducer';
-
-// ToDo: delete
-import chartAttr from '../widgets/ReportElement/chartAttr';
 
 interface MouseControllerProps {
   reportElsState: ReportEl[];
@@ -112,11 +111,12 @@ export default class MouseController {
             .substr(2, 9)}`,
           type: ReportElType.Text,
           width: 400,
-          height: 100,
-          x: 0,
-          y: 0,
-          data: '',
+          height: 160,
+          x: 600,
+          y: 200,
+          text: '',
           selected: true,
+          editing: true,
         },
       ],
     });
@@ -127,8 +127,6 @@ export default class MouseController {
    */
   @bind
   public onChartListItemClick(chartType: ReportChartType) {
-    const { data, cols } = chartAttr[chartType];
-
     this._props.reportElsDispatch({
       type: ReportElsActionType.Add,
       payload: [
@@ -140,14 +138,18 @@ export default class MouseController {
             .toString(36)
             .substr(2, 9)}`,
           type: ReportElType.Chart,
+          chartType,
           width: 400,
           height: 300,
-          x: 0,
-          y: 0,
-          data,
-          cols,
+          x: 600,
+          y: 200,
+          dataSource: {
+            id: '',
+            data: [],
+          },
           selected: true,
-          chartType,
+          editing: true,
+          options: {},
         },
       ],
     });
@@ -189,7 +191,7 @@ export default class MouseController {
   /**  鼠标按下选中 report elment。 */
   // prettier-ignore
   @bind
-  public onReportElMouseDown(reportElsId: string[], unselectOthers: boolean) {
+  public onReportElMouseDown(reportElId: string, unselectOthers: boolean) {
     const { reportElsState, reportElsDispatch } = this._props;
 
     if (unselectOthers) {
@@ -201,8 +203,8 @@ export default class MouseController {
     }
 
     reportElsDispatch({
-      type: ReportElsActionType.Select,
-      payload: reportElsId,
+      type: ReportElsActionType.StartEdit,
+      payload: reportElId,
       disallowUndo: true,
     });
   }
@@ -218,5 +220,27 @@ export default class MouseController {
     if (canvas && html) {
       canvas.style.cursor = html.style.cursor || 'auto';
     }
+  }
+
+  /** Report Editor */
+  /** 设置图表的数据源 */
+  @bind
+  public onChartDataSourceSelect(
+    id: string,
+    dataSource: ReportChartDataSource,
+  ) {
+    this._props.reportElsDispatch({
+      type: ReportElsActionType.SetChartDataSource,
+      payload: { id, dataSource },
+    });
+  }
+
+  /** 设置图表的选项 */
+  @bind
+  public onChartOptionsChange(id: string, options: ReportChartOptions) {
+    this._props.reportElsDispatch({
+      type: ReportElsActionType.SetChartOptions,
+      payload: { id, options },
+    });
   }
 }

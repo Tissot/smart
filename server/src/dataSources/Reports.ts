@@ -18,23 +18,24 @@ export default class Reports extends DataSource {
     this._context;
   }
 
-  // public async getReportById(id: string) {
-  //   const ownerId = this._context.user.id;
+  public async getReport(id: string) {
+    const ownerId = this._context.user.id;
 
-  //   const report = await this._store.reports.findById(id, {
-  //     where: {
-  //       ownerId,
-  //     },
-  //   });
+    const report = await this._store.reports.findOne({
+      where: {
+        id,
+        ownerId,
+      },
+    });
 
-  //   if (!report) {
-  //     throw new ApolloError('报告不存在。', 'REPORT_NOT_FOUND');
-  //   }
+    if (!report) {
+      throw new ApolloError('报告不存在。', 'REPORT_NOT_FOUND');
+    }
 
-  //   return report.get();
-  // }
+    return report.get();
+  }
 
-  public async getReports() {
+  public async getAllReports() {
     const ownerId = this._context.user.id;
 
     const reports = await this._store.reports.findAndCountAll({
@@ -51,6 +52,7 @@ export default class Reports extends DataSource {
 
     const report = await this._store.reports.create({
       ownerId,
+      name: '',
       elements,
     } as any);
 
@@ -71,20 +73,37 @@ export default class Reports extends DataSource {
     return !!reportRemovedCount;
   }
 
-  // public async renameReport(id: string, name: string) {
-  //   const ownerId = this._context.user.id;
+  public async renameReport(id: string, name: string) {
+    const ownerId = this._context.user.id;
 
-  //   const [reportRenamedCount] = await this._store.reports.update(
-  //     { name },
-  //     {
-  //       where: { id, ownerId },
-  //     },
-  //   );
+    const [reportRenamedCount] = await this._store.reports.update(
+      { name },
+      {
+        where: { id, ownerId },
+      },
+    );
 
-  //   if (!reportRenamedCount) {
-  //     throw new ApolloError('报告不存在。', 'REPORT_NOT_FOUND');
-  //   }
+    if (!reportRenamedCount) {
+      throw new ApolloError('报告不存在。', 'REPORT_NOT_FOUND');
+    }
 
-  //   return !!reportRenamedCount;
-  // }
+    return !!reportRenamedCount;
+  }
+
+  public async saveReportEls(id: string, elements: string) {
+    const ownerId = this._context.user.id;
+
+    const [reportSavedCount] = await this._store.reports.update(
+      { elements },
+      {
+        where: { id, ownerId },
+      },
+    );
+
+    if (!reportSavedCount) {
+      throw new ApolloError('报告不存在。', 'REPORT_NOT_FOUND');
+    }
+
+    return !!reportSavedCount;
+  }
 }

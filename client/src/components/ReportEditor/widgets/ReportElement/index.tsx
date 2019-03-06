@@ -1,13 +1,13 @@
 import * as React from 'react';
+import { Empty } from 'antd';
 
-import LineChart from '$components/Charts/LineChart';
-import BarChart from '$components/Charts/BarChart';
-import Text from '$components/Text';
+import LineChart, { LineChartOptions } from '$components/Charts/LineChart';
+import BarChart, { BarChartOptions } from '$components/Charts/BarChart';
+import ScatterChart, {
+  ScatterChartOptions,
+} from '$components/Charts/ScatterChart';
 
-import customMetaKey from '$utils/customMetaKEey';
-
-import MouseController from '../../controllers/MouseController';
-import KeyboardController from '../../controllers/KeyboardController';
+import Text from './Text';
 
 import './index.less';
 
@@ -19,36 +19,50 @@ export enum ReportElType {
 export enum ReportChartType {
   LineChart = 'lineChart',
   BarChart = 'barChart',
+  ScatterChart = 'scatterChart',
 }
 
 interface ReportCommonEl {
   id: string;
   type: ReportElType;
+  chartType?: ReportChartType;
   x: number;
   y: number;
   width: number;
   height: number;
-  data: any;
   selected: boolean;
+  editing: boolean;
 }
+
+export interface ReportChartDataSource {
+  id: string;
+  data: any;
+}
+
+export type ReportChartOptions =
+  | LineChartOptions
+  | BarChartOptions
+  | ScatterChartOptions;
 
 interface ReportChart extends ReportCommonEl {
   type: ReportElType.Chart;
   chartType: ReportChartType;
-  data: any;
-  cols: any;
+  dataSource: ReportChartDataSource;
+  options: ReportChartOptions;
 }
 
 interface ReportText extends ReportCommonEl {
   type: ReportElType.Text;
-  data: string;
+  text: string;
 }
 
 export type ReportEl = ReportChart | ReportText;
 
 type ReportElementProps = ReportEl & {
-  mouseController: MouseController;
-  keyboardController: KeyboardController;
+  onMouseDown?(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
+  onMouseUp?(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
+  onInputText?(event: any): void;
+  onMouseMove?(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void;
 };
 
 // 与 './index.less' 中的 @report-element-selected-border-width 保持同步。
@@ -62,10 +76,11 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
     y,
     width,
     height,
-    data,
     selected,
-    mouseController,
-    keyboardController,
+    onMouseMove,
+    onMouseDown,
+    onMouseUp,
+    onInputText,
   } = props;
 
   return (
@@ -82,56 +97,42 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
       id={id}
       data-x={x}
       data-y={y}
-      onMouseMove={
-        type === ReportElType.Chart
-          ? mouseController.onReportElMouseMove
-          : undefined
-      }
-      onMouseDown={React.useCallback(
-        (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-          mouseController.onReportElMouseDown(
-            [id],
-            !customMetaKey({ ctrlKey: event.ctrlKey, metaKey: event.metaKey }),
-          ),
-        [id],
-      )}
-      onMouseUp={mouseController.onReportElMouseUp}
+      onMouseMove={onMouseMove}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
     >
       {(() => {
         switch (props.type) {
           case ReportElType.Chart:
-            const commonChartProps = {
+            if (
+              !props.dataSource ||
+              !props.dataSource.id ||
+              !props.dataSource.data.rows ||
+              props.dataSource.data.rows.length === 0
+            ) {
+              return <Empty style={{ height: '100%' }} />;
+            }
+
+            const chartProps = {
               width,
               height,
-              data,
-              cols: props.cols,
+              data: props.dataSource.data,
+              options: props.options,
             };
 
             switch (props.chartType) {
               case ReportChartType.LineChart:
-                const lineChartProps = {
-                  ...commonChartProps,
-                };
-
-                return <LineChart {...lineChartProps} />;
+                return <LineChart {...chartProps} />;
               case ReportChartType.BarChart:
-                const barChartProps = {
-                  ...commonChartProps,
-                };
-
-                return <BarChart {...barChartProps} />;
+                return <BarChart {...chartProps} />;
+              case ReportChartType.ScatterChart:
+                return <ScatterChart {...chartProps} />;
               default:
                 // prettier-ignore
                 throw new Error(`Invalid reportEl chartType ${props.chartType}.`);
             }
           case ReportElType.Text:
-            return (
-              <Text
-                id={id}
-                data={data}
-                onInputUpdate={keyboardController._onTextInputUpdate}
-              />
-            );
+            return <Text text={props.text} onChange={onInputText} />;
           default:
             // prettier-ignore
             throw new Error(`Invalid reportEl type ${(props as any).type}.`);

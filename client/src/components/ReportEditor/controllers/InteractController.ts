@@ -37,7 +37,7 @@ export default class InteractController {
         outer: 'parent',
       },
       restrictSize: {
-        min: { width: 10, height: 10 },
+        min: { width: 150, height: 150 },
       },
     };
 

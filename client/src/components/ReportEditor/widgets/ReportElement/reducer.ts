@@ -1,13 +1,23 @@
-import { ReportEl } from './index';
+import DataSet from '@antv/data-set';
+
+import {
+  ReportEl,
+  ReportElType,
+  ReportChartDataSource,
+  ReportChartOptions,
+} from './index';
 
 export enum ReportElsActionType {
   Add = 'add',
   Delete = 'delete',
   Move = 'move',
   Resize = 'resize',
+  StartEdit = 'startEdit',
   Select = 'select',
   Unselect = 'unselect',
-  TextInput = 'textInput',
+  InputText = 'inputText',
+  SetChartDataSource = 'setChartsDataSource',
+  SetChartOptions = 'setChartsOptions',
   Undo = 'undo',
   Redo = 'redo',
 }
@@ -48,6 +58,11 @@ interface ReportElsResizeAction extends ReportElsCommonAction {
   }[];
 }
 
+interface ReportElsStartEditAction extends ReportElsCommonAction {
+  type: ReportElsActionType.StartEdit;
+  payload: string;
+  disallowUndo: true;
+}
 interface ReportElsSelectAction extends ReportElsCommonAction {
   type: ReportElsActionType.Select;
   payload: string[];
@@ -60,9 +75,17 @@ interface ReportElsUnselectAction extends ReportElsCommonAction {
   disallowUndo: true;
 }
 
-interface TextInputAction extends ReportElsCommonAction {
-  type: ReportElsActionType.TextInput;
-  payload: { id: string; data: string };
+interface InputTextAction extends ReportElsCommonAction {
+  type: ReportElsActionType.InputText;
+  payload: { id: string; text: string };
+}
+interface SetChartDataSourceAction extends ReportElsCommonAction {
+  type: ReportElsActionType.SetChartDataSource;
+  payload: { id: string; dataSource: ReportChartDataSource };
+}
+interface SetChartOptionsAction extends ReportElsCommonAction {
+  type: ReportElsActionType.SetChartOptions;
+  payload: { id: string; options: ReportChartOptions };
 }
 
 interface ReportElsUndoAction extends ReportElsCommonAction {
@@ -80,9 +103,12 @@ export type ReportElsAction =
   | ReportElsDeleteAction
   | ReportElsMoveAction
   | ReportElsResizeAction
+  | ReportElsStartEditAction
   | ReportElsSelectAction
   | ReportElsUnselectAction
-  | TextInputAction
+  | InputTextAction
+  | SetChartDataSourceAction
+  | SetChartOptionsAction
   | ReportElsUndoAction
   | ReportElsRedoAction;
 
@@ -143,8 +169,23 @@ export default function reportElsReducer(
         .map(reportEl => ({
           ...reportEl,
           selected: false,
+          editing: false,
         }))
-        .concat(action.payload);
+        .concat(
+          action.payload.map(reportElWillAdd =>
+            reportElWillAdd.type === ReportElType.Chart
+              ? {
+                  ...reportElWillAdd,
+                  dataSource: {
+                    ...reportElWillAdd.dataSource,
+                    data: new DataSet.View().source(
+                      reportElWillAdd.dataSource.data,
+                    ),
+                  },
+                }
+              : reportElWillAdd,
+          ),
+        );
       break;
     case ReportElsActionType.Delete:
       reverseAction = {
@@ -233,6 +274,20 @@ export default function reportElsReducer(
         return reportEl;
       });
       break;
+    case ReportElsActionType.StartEdit:
+      newReportElsState = reportEls.state.map(reportEl =>
+        reportEl.id === action.payload
+          ? {
+              ...reportEl,
+              selected: true,
+              editing: true,
+            }
+          : {
+              ...reportEl,
+              editing: false,
+            },
+      );
+      break;
     case ReportElsActionType.Select:
       newReportElsState = reportEls.state.map(reportEl =>
         (action.payload as ReportElsSelectAction['payload']).some(
@@ -253,26 +308,92 @@ export default function reportElsReducer(
           ? {
               ...reportEl,
               selected: false,
+              editing: false,
             }
           : reportEl,
       );
       break;
-    case ReportElsActionType.TextInput:
-      reverseAction = {
-        type: ReportElsActionType.TextInput,
-        payload: {
-          id: action.payload.id,
-          data: reportEls.state.filter(
-            reportEl => reportEl.id === action.payload.id,
-          )[0].data,
-        },
-      };
+    case ReportElsActionType.InputText:
+      for (const reportEl of reportEls.state) {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Text
+        ) {
+          const { id, text } = reportEl;
+          reverseAction = {
+            type: ReportElsActionType.InputText,
+            payload: { id, text },
+          };
+        }
+      }
 
       newReportElsState = reportEls.state.map(reportEl => {
-        if (reportEl.id === action.payload.id) {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Text
+        ) {
           return {
             ...reportEl,
-            data: action.payload.data,
+            text: action.payload.text,
+          };
+        }
+
+        return reportEl;
+      });
+      break;
+    case ReportElsActionType.SetChartDataSource:
+      for (const reportEl of reportEls.state) {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Chart
+        ) {
+          const { id, dataSource } = reportEl;
+          reverseAction = {
+            type: ReportElsActionType.SetChartDataSource,
+            payload: { id, dataSource },
+          };
+        }
+      }
+
+      newReportElsState = reportEls.state.map(reportEl => {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Chart
+        ) {
+          return {
+            ...reportEl,
+            dataSource: {
+              ...action.payload.dataSource,
+              data: new DataSet.View().source(action.payload.dataSource.data),
+            },
+          };
+        }
+
+        return reportEl;
+      });
+      break;
+    case ReportElsActionType.SetChartOptions:
+      for (const reportEl of reportEls.state) {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Chart
+        ) {
+          const { id, options } = reportEl;
+          reverseAction = {
+            type: ReportElsActionType.SetChartOptions,
+            payload: { id, options },
+          };
+        }
+      }
+
+      newReportElsState = reportEls.state.map(reportEl => {
+        if (
+          reportEl.id === action.payload.id &&
+          reportEl.type === ReportElType.Chart
+        ) {
+          return {
+            ...reportEl,
+            options: action.payload.options,
           };
         }
 

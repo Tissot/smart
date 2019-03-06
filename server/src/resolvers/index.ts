@@ -1,15 +1,15 @@
 import { userMutation } from './Users';
-import { dataSourcesQuery, dataSourcesMutation } from './DataSources';
 import { reportsQuery, reportsMutation } from './Reports';
+import { dataSourcesQuery, dataSourcesMutation } from './DataSources';
 
 export default {
   Query: {
-    ...dataSourcesQuery,
     ...reportsQuery,
+    ...dataSourcesQuery,
   },
   Mutation: {
     ...userMutation,
-    ...dataSourcesMutation,
     ...reportsMutation,
+    ...dataSourcesMutation,
   },
 };

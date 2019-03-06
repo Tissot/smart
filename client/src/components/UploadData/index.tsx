@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ApolloQueryResult } from 'apollo-boost';
 import { graphql, OperationVariables, MutationFn } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Upload, Button, Icon } from 'antd';
+import { Upload, Button, Icon, message } from 'antd';
 import { DataSet } from '@antv/data-set';
 
 import { LocaleContext } from '$contexts/Locale';
@@ -45,13 +45,21 @@ function UploadData(props: UploadDataProps) {
     fileReader.onload = function(event: FileReaderEventMap['load']) {
       if (event.target) {
         if (file.type === 'application/json') {
-          uploadData &&
-            uploadData({
-              variables: {
-                name: file.name,
-                data: (event.target as any).result,
-              },
-            });
+          // 确保上传的 json 文件内容格式正确。
+          try {
+            const data = JSON.stringify(
+              JSON.parse((event.target as any).result),
+            );
+            uploadData &&
+              uploadData({
+                variables: {
+                  name: file.name,
+                  data,
+                },
+              });
+          } catch (error) {
+            message.error(locale.error.fileContentError);
+          }
         }
 
         if (file.type === 'text/csv') {

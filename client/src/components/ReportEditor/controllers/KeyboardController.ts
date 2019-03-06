@@ -10,6 +10,7 @@ import customMetaKey from '$utils/customMetaKEey';
 interface ShortCutsControllerProps {
   reportElsState: ReportEl[];
   reportElsDispatch: React.Dispatch<ReportElsAction>;
+  onSave(reportELs: ReportEl[]): void;
 }
 
 export default class ShortCutsController {
@@ -35,10 +36,10 @@ export default class ShortCutsController {
   }
 
   @bind
-  public _onTextInputUpdate(id: string, data: string) {
+  public _onInputText(id: string, text: string) {
     this._props.reportElsDispatch({
-      type: ReportElsActionType.TextInput,
-      payload: { id, data },
+      type: ReportElsActionType.InputText,
+      payload: { id, text },
     });
   }
 
@@ -135,6 +136,14 @@ export default class ShortCutsController {
                 payload: reportElsState.map(reportEl => reportEl.id),
                 disallowUndo: true,
               });
+        }
+        break;
+      // S
+      case 83:
+        // ctrl(command) + S: 保存
+        if (customMetaKey({ ctrlKey: event.ctrlKey, metaKey: event.metaKey })) {
+          event.preventDefault();
+          this._props.onSave(reportElsState);
         }
         break;
       // Y

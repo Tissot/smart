@@ -38,10 +38,14 @@ export default {
       selectAll: '全选',
       unselectAll: '取消选择',
       deleteSelected: '删除所选',
-      addChart: '添加图表',
+      chart: '图表',
       text: '文本',
       lineChart: '折线图',
       barChart: '柱状图',
+      scatterChart: '散点图',
+      textEmptyTips: '请输入文本',
+      isXAxisTime: '横轴是否为时间轴？',
+      isLineSmooth: '折线是否为曲线？',
     },
   },
   error: {
@@ -51,6 +55,7 @@ export default {
     reportNotFound: '报告不存在。',
     dataSourceNotFound: '数据源不存在。',
     networkError: '网络错误。',
+    fileContentError: '文件内容错误。',
   },
   notFound: '该页面不存在。',
 };

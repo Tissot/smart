@@ -1,6 +1,5 @@
 export interface CommonChartProps {
   width: number;
   height: number;
-  data: any[];
-  cols: any;
+  data: any;
 }

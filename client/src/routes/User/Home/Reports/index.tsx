@@ -17,9 +17,9 @@ interface ReportsProps {
   navigate?: NavigateFn;
 }
 
-const GET_REPORTS = gql`
+const GET_ALL_REPORTS = gql`
   query {
-    getReports {
+    getAllReports {
       rows {
         id
         createdAt
@@ -91,8 +91,8 @@ export default React.memo(function Reports(props: ReportsProps) {
   return (
     <div>
       <CustomList
-        responseKey="getReports"
-        getListItems={GET_REPORTS}
+        responseKey="getAllReports"
+        getListItems={GET_ALL_REPORTS}
         removeListItem={REMOVE_REPORT}
         itemIcon={reportIcon}
         listHeader={reportsHeader}

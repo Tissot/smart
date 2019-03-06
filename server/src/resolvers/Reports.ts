@@ -3,13 +3,13 @@ import { Config } from 'apollo-server';
 import { Report } from '../store';
 
 interface ReportsQuery {
-  // getReportById(
-  //   parent: any,
-  //   args: { id: string },
-  //   context: Config['context'],
-  //   info: any,
-  // ): Promise<Report>;
-  getReports(
+  getReport(
+    parent: any,
+    args: { id: string },
+    context: Config['context'],
+    info: any,
+  ): Promise<Report>;
+  getAllReports(
     parent: any,
     args: {},
     context: Config['context'],
@@ -30,22 +30,28 @@ interface ReportsMutation {
     context: Config['context'],
     info: any,
   ): Promise<boolean>;
-  // renameReport(
-  //   parent: any,
-  //   args: { id: string; name: string },
-  //   context: Config['context'],
-  //   info: any,
-  // ): boolean;
+  renameReport(
+    parent: any,
+    args: { id: string; name: string },
+    context: Config['context'],
+    info: any,
+  ): Promise<boolean>;
+  saveReportEls(
+    parent: any,
+    args: { id: string; elements: string },
+    context: Config['context'],
+    info: any,
+  ): Promise<boolean>;
 }
 
 export const reportsQuery: ReportsQuery = {
-  // getReportById: async(_, { id }, { dataSources }) => {
-  //   const report = await dataSources.reportsgetReportById(id);
+  getReport: async(_, { id }, { dataSources }) => {
+    const report = await dataSources.reports.getReport(id);
 
-  //   return report;
-  // },
-  getReports: async(_, __, { dataSources }) => {
-    const reports = await dataSources.reports.getReports();
+    return report;
+  },
+  getAllReports: async(_, __, { dataSources }) => {
+    const reports = await dataSources.reports.getAllReports();
 
     return reports;
   },
@@ -62,9 +68,14 @@ export const reportsMutation: ReportsMutation = {
 
     return successful;
   },
-  // renameReport: async(_, { id, name }, { dataSources }) => {
-  //   const successful = await dataSources.reports.renameReport(id, name);
+  renameReport: async(_, { id, name }, { dataSources }) => {
+    const successful = await dataSources.reports.renameReport(id, name);
 
-  //   return successful;
-  // },
+    return successful;
+  },
+  saveReportEls: async(_, { id, elements }, { dataSources }) => {
+    const successful = await dataSources.reports.saveReportEls(id, elements);
+
+    return successful;
+  },
 };
