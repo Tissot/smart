@@ -190,9 +190,19 @@ export default function reportElsReducer(
     case ReportElsActionType.Delete:
       reverseAction = {
         type: ReportElsActionType.Add,
-        payload: reportEls.state.filter(
-          reportEl => action.payload.indexOf(reportEl.id) !== -1,
-        ),
+        payload: reportEls.state
+          .filter(reportEl => action.payload.indexOf(reportEl.id) !== -1)
+          .map(reportElWillAdd =>
+            reportElWillAdd.type === ReportElType.Chart
+              ? {
+                  ...reportElWillAdd,
+                  dataSource: {
+                    ...reportElWillAdd.dataSource,
+                    data: reportElWillAdd.dataSource.data.origin,
+                  },
+                }
+              : reportElWillAdd,
+          ),
       };
 
       newReportElsState = reportEls.state.filter(
