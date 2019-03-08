@@ -40,12 +40,13 @@ export default React.memo(function ConfigPanel(props: ConfigPanelProps) {
 
   if (!editingReportEl) return <Sider className="config-panel" />;
 
-  const { type, chartType } = editingReportEl;
+  let title = locale.user.report[editingReportEl.type];
 
-  let title = locale.user.report[type];
-
-  if (chartType) {
-    title += ` > ${locale.user.report[chartType]}`;
+  if (
+    editingReportEl.type === ReportElType.Chart &&
+    editingReportEl.chartType
+  ) {
+    title += ` > ${locale.user.report[editingReportEl.chartType]}`;
   }
 
   return (

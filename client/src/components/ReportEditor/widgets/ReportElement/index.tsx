@@ -25,7 +25,6 @@ export enum ReportChartType {
 interface ReportCommonEl {
   id: string;
   type: ReportElType;
-  chartType?: ReportChartType;
   x: number;
   y: number;
   width: number;

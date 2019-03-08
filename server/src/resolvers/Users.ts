@@ -40,10 +40,6 @@ export const userMutation: UsersMutation = {
     return user;
   },
   signInByPassword: async(_, { username, password }, { dataSources }) => {
-    if (!/^[\da-zA-Z]{3,15}$/g.test(username)) {
-      throw new UserInputError('用户名长度为 3 ～ 15，由字母或数字组成。');
-    }
-
     const user = await dataSources.users.signInByPassword(username, password);
 
     return user;
