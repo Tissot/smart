@@ -43,6 +43,7 @@ export interface Locale {
       text: string;
       lineChart: string;
       barChart: string;
+      pieChart: string;
       scatterChart: string;
       textEmptyTips: string;
       isXAxisTime: string;

@@ -56,6 +56,10 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
       value: locale.user.report.barChart,
     },
     {
+      key: ReportChartType.PieChart,
+      value: locale.user.report.pieChart,
+    },
+    {
       key: ReportChartType.ScatterChart,
       value: locale.user.report.scatterChart,
     },

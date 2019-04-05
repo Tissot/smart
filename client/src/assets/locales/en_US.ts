@@ -41,6 +41,7 @@ export default {
       chart: 'Chart',
       text: 'Text',
       lineChart: 'Line chart',
+      pieChart: 'Pie chart',
       barChart: 'Bar chart',
       scatterChart: 'Scatter chart',
       textEmptyTips: 'Please enter text.',

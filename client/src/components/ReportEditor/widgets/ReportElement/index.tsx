@@ -3,6 +3,7 @@ import { Empty } from 'antd';
 
 import LineChart, { LineChartOptions } from '$components/Charts/LineChart';
 import BarChart, { BarChartOptions } from '$components/Charts/BarChart';
+import PieChart, { PieChartOptions } from '$components/Charts/PieChart';
 import ScatterChart, {
   ScatterChartOptions,
 } from '$components/Charts/ScatterChart';
@@ -19,6 +20,7 @@ export enum ReportElType {
 export enum ReportChartType {
   LineChart = 'lineChart',
   BarChart = 'barChart',
+  PieChart = 'pieChart',
   ScatterChart = 'scatterChart',
 }
 
@@ -41,6 +43,7 @@ export interface ReportChartDataSource {
 export type ReportChartOptions =
   | LineChartOptions
   | BarChartOptions
+  | PieChartOptions
   | ScatterChartOptions;
 
 interface ReportChart extends ReportCommonEl {
@@ -124,6 +127,8 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
                 return <LineChart {...chartProps} />;
               case ReportChartType.BarChart:
                 return <BarChart {...chartProps} />;
+              case ReportChartType.PieChart:
+                return <PieChart {...chartProps} />;
               case ReportChartType.ScatterChart:
                 return <ScatterChart {...chartProps} />;
               default:
