@@ -26,10 +26,21 @@ const { Header, Sider, Content } = Layout;
 export default React.memo(function Home(props: HomeProps) {
   const { setUser } = React.useContext(UserContext);
   const { locale, setLocale } = React.useContext(LocaleContext);
-  const currentPaths = React.useMemo(() => [`${props.uri}${props['*']}`], [
-    props.uri,
-    props['*'],
-  ]);
+  const currentPaths = React.useMemo(() => {
+    if (props.uri === '/') {
+      if (props['*']) {
+        return [`/${props['*']}`];
+      } else {
+        return ['/'];
+      }
+    } else {
+      if (props['*']) {
+        return [`${props.uri}/${props['*']}`];
+      } else {
+        return [`${props.uri}`];
+      }
+    }
+  }, [props.uri, props['*']]);
   const localeItems = React.useMemo(
     () => [
       {
