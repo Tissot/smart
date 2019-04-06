@@ -16,7 +16,7 @@ export default React.memo(function(props: ApolloProviderProps) {
   const client = React.useMemo(
     () =>
       new ApolloClient({
-        uri: 'http://localhost:4000/graphql',
+        uri: 'http://localhost:4000',
         headers: {
           authorization: user.token,
         },
