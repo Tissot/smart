@@ -7,6 +7,7 @@ import { LocaleContext } from '$contexts/Locale';
 
 import Loading from '$components/Loading';
 import Error from '$components/Error';
+import DoActionOnMount from '$components/DoActionOnMount';
 
 import './index.less';
 
@@ -58,6 +59,7 @@ export default React.memo(function CustomList(props: CustomListProps) {
 
         return (
           <div className="custom-list">
+            <DoActionOnMount doAction={refetch} />
             <List
               header={header}
               bordered

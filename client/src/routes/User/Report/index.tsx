@@ -133,19 +133,6 @@ function Report(props: ReportProps) {
               ),
             },
           });
-          console.log(
-            reportEls.map(reportEl =>
-              reportEl.type === ReportElType.Chart
-                ? {
-                    ...reportEl,
-                    dataSource: {
-                      ...reportEl.dataSource,
-                      data: reportEl.dataSource.data.origin,
-                    },
-                  }
-                : reportEl,
-            ),
-          );
         }}
       />
     </Layout>
