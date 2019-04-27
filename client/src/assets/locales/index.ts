@@ -48,6 +48,7 @@ export interface Locale {
       textEmptyTips: string;
       isXAxisTime: string;
       isLineSmooth: string;
+      savedSuccessfully: string;
     };
   };
   error: {

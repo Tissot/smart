@@ -47,6 +47,7 @@ export default {
       textEmptyTips: 'Please enter text.',
       isXAxisTime: 'Is x axis time?',
       isLineSmooth: 'Is line smooth?',
+      savedSuccessfully: 'Saved Successfully.',
     },
   },
   error: {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from '@reach/router';
 import { compose, graphql, Mutation, MutationFn } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Layout, Icon } from 'antd';
+import { Layout, Icon, message } from 'antd';
 import moment from 'moment';
 
 import { LocaleContext } from '$contexts/Locale';
@@ -114,8 +114,8 @@ function Report(props: ReportProps) {
       <ReportEditor
         initialEls={report.elements}
         dataSources={getDataSources.getDataSources}
-        onSave={reportEls => {
-          saveReport({
+        onSave={async reportEls => {
+          await saveReport({
             variables: {
               id: report.id,
               elements: JSON.stringify(
@@ -133,6 +133,7 @@ function Report(props: ReportProps) {
               ),
             },
           });
+          message.success(locale.user.report.savedSuccessfully);
         }}
       />
     </Layout>

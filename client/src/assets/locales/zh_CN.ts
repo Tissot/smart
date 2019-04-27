@@ -47,6 +47,7 @@ export default {
       textEmptyTips: '请输入文本',
       isXAxisTime: '横轴是否为时间轴？',
       isLineSmooth: '折线是否为曲线？',
+      savedSuccessfully: '保存成功。',
     },
   },
   error: {
