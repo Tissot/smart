@@ -5,6 +5,7 @@ export default {
   },
   common: {
     loading: 'Loading...',
+    error: 'Error!',
     createdAt: 'Created at',
     updatedAt: 'Updated at',
   },

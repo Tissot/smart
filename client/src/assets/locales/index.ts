@@ -8,6 +8,7 @@ export interface Locale {
   };
   common: {
     loading: string;
+    error: string;
     createdAt: string;
     updatedAt: string;
   };

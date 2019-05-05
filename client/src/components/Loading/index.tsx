@@ -12,5 +12,9 @@ interface LoadingProps {
 export default React.memo(function Loading(props: LoadingProps) {
   const { locale } = React.useContext(LocaleContext);
 
-  return <Spin tip={locale.common.loading}>{props.children}</Spin>;
+  return (
+    <div className="loading">
+      <Spin tip={locale.common.loading}>{props.children}</Spin>
+    </div>
+  );
 });

@@ -5,6 +5,7 @@ export default {
   },
   common: {
     loading: '加载中...',
+    error: '系统出错！',
     createdAt: '创建于',
     updatedAt: '更新于',
     uploadData: '上传数据',
