@@ -5,7 +5,7 @@ import Legend from 'bizcharts/lib/components/Legend';
 import Tooltip from 'bizcharts/lib/components/Tooltip';
 import Coord from 'bizcharts/lib/components/Coord';
 import Point from 'bizcharts/lib/components/TypedGeom/Point';
-import * as bizUtil from 'bizcharts/lib/core';
+import { Shape } from 'bizcharts/lib/core';
 
 import { CommonChartProps } from '../CommonChartProps';
 
@@ -30,7 +30,7 @@ function getTextAttrs(cfg: any) {
 }
 
 // 给 point 注册一个词云的 shape
-bizUtil.Shape.registerShape('point', 'cloud', {
+Shape.registerShape('point', 'cloud', {
   drawShape(cfg: any, container: Canvas) {
     const attrs = getTextAttrs(cfg);
 
