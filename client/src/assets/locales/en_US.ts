@@ -14,7 +14,7 @@ export default {
     username: 'username',
     password: 'password',
     signInSuccessfully: 'Sign in Successfully.',
-    signUpSuccessfully: 'Sign up Successfully',
+    signUpSuccessfully: 'Sign up Successfully.',
     usernameLimit:
       'The username should be 3 to 15 in length and consists of letters or numbers.',
     passwordLimit:
