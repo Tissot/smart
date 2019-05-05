@@ -49,6 +49,7 @@ export interface Locale {
       areaChart: string;
       barChart: string;
       pieChart: string;
+      radarChart: string;
       wordCloud: string;
       scatterChart: string;
       textEmptyTips: string;

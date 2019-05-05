@@ -49,6 +49,7 @@ export default {
       barChart: 'Bar chart',
       pieChart: 'Pie chart',
       scatterChart: 'Scatter chart',
+      radarChart: 'Radar chart',
       wordCloud: 'Word cloud',
       textEmptyTips: 'Please enter text.',
       isXAxisTime: 'Is x axis time?',

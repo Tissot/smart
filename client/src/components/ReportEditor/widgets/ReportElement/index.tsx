@@ -12,6 +12,7 @@ import WordCloud, { WordCloudOptions } from '$components/Charts/WordCloud';
 import Text from './Text';
 
 import './index.less';
+import RadarChart from '$components/Charts/RadarChart';
 
 export enum ReportElType {
   Chart = 'chart',
@@ -24,6 +25,7 @@ export enum ReportChartType {
   BarChart = 'barChart',
   PieChart = 'pieChart',
   ScatterChart = 'scatterChart',
+  RadarChart = 'radarChart',
   WordCloud = 'wordCloud',
 }
 
@@ -139,6 +141,8 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
                 return <PieChart {...chartProps} />;
               case ReportChartType.ScatterChart:
                 return <ScatterChart {...chartProps} />;
+              case ReportChartType.RadarChart:
+                return <RadarChart {...chartProps} />;
               case ReportChartType.WordCloud:
                 return <WordCloud {...chartProps} />;
               default:

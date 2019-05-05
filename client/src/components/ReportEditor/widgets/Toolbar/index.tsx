@@ -68,6 +68,10 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
       value: locale.user.report.scatterChart,
     },
     {
+      key: ReportChartType.RadarChart,
+      value: locale.user.report.radarChart,
+    },
+    {
       key: ReportChartType.WordCloud,
       value: locale.user.report.wordCloud,
     },
