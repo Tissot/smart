@@ -45,6 +45,7 @@ export default {
       chart: '图表',
       text: '文本',
       lineChart: '折线图',
+      areaChart: '面积图',
       barChart: '柱状图',
       pieChart: '饼状图',
       scatterChart: '散点图',

@@ -3,6 +3,7 @@ import Chart from 'bizcharts/lib/components/Chart';
 import Legend from 'bizcharts/lib/components/Legend';
 import Axis from 'bizcharts/lib/components/Axis';
 import Tooltip from 'bizcharts/lib/components/Tooltip';
+import Area from 'bizcharts/lib/components/TypedGeom/Area';
 import Line from 'bizcharts/lib/components/TypedGeom/Line';
 
 import { CommonChartProps } from '../CommonChartProps';
@@ -10,6 +11,7 @@ import { CommonChartProps } from '../CommonChartProps';
 export interface LineChartOptions {
   isXAxisTime?: boolean;
   isLineSmooth?: boolean;
+  showArea?: boolean;
 }
 
 interface LineChartProps extends CommonChartProps {
@@ -55,9 +57,16 @@ export default React.memo(function LineChart(props: LineChartProps) {
       <Axis name={yAxisValue} />
       <Tooltip
         crosshairs={{
-          type: 'y',
+          type: 'line',
         }}
       />
+      {
+        options.showArea && <Area
+          position={position}
+          color={yAxisKey}
+          shape={options.isLineSmooth ? 'smooth' : undefined}
+        />
+      }
       <Line
         position={position}
         size={2}

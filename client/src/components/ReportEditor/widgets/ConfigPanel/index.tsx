@@ -90,8 +90,10 @@ export default React.memo(function ConfigPanel(props: ConfigPanelProps) {
             }
 
             if (
-              editingReportEl.type === ReportElType.Chart &&
-              editingReportEl.chartType === ReportChartType.LineChart
+              editingReportEl.type === ReportElType.Chart && (
+                editingReportEl.chartType === ReportChartType.LineChart ||
+                editingReportEl.chartType === ReportChartType.AreaChart
+              )
             ) {
               pannelItems.push(
                 <div key="is-x-axis-time" className="config-item">

@@ -19,6 +19,7 @@ export enum ReportElType {
 
 export enum ReportChartType {
   LineChart = 'lineChart',
+  AreaChart = 'areaChart',
   BarChart = 'barChart',
   PieChart = 'pieChart',
   ScatterChart = 'scatterChart',
@@ -124,6 +125,10 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
 
             switch (props.chartType) {
               case ReportChartType.LineChart:
+                return <LineChart {...chartProps} />;
+              case ReportChartType.AreaChart:
+                (chartProps.options as LineChartOptions).showArea = true;
+
                 return <LineChart {...chartProps} />;
               case ReportChartType.BarChart:
                 return <BarChart {...chartProps} />;

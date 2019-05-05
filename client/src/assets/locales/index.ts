@@ -46,6 +46,7 @@ export interface Locale {
       chart: string;
       text: string;
       lineChart: string;
+      areaChart: string;
       barChart: string;
       pieChart: string;
       scatterChart: string;
