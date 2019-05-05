@@ -49,6 +49,7 @@ export default {
       barChart: '柱状图',
       pieChart: '饼状图',
       scatterChart: '散点图',
+      wordCloud: '词云',
       textEmptyTips: '请输入文本',
       isXAxisTime: '横轴是否为时间轴？',
       isLineSmooth: '折线是否为曲线？',

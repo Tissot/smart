@@ -49,6 +49,7 @@ export default {
       barChart: 'Bar chart',
       pieChart: 'Pie chart',
       scatterChart: 'Scatter chart',
+      wordCloud: 'Word cloud',
       textEmptyTips: 'Please enter text.',
       isXAxisTime: 'Is x axis time?',
       isLineSmooth: 'Is line smooth?',

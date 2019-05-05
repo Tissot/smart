@@ -7,6 +7,7 @@ import PieChart, { PieChartOptions } from '$components/Charts/PieChart';
 import ScatterChart, {
   ScatterChartOptions,
 } from '$components/Charts/ScatterChart';
+import WordCloud, { WordCloudOptions } from '$components/Charts/WordCloud';
 
 import Text from './Text';
 
@@ -23,6 +24,7 @@ export enum ReportChartType {
   BarChart = 'barChart',
   PieChart = 'pieChart',
   ScatterChart = 'scatterChart',
+  WordCloud = 'wordCloud',
 }
 
 interface ReportCommonEl {
@@ -45,7 +47,8 @@ export type ReportChartOptions =
   | LineChartOptions
   | BarChartOptions
   | PieChartOptions
-  | ScatterChartOptions;
+  | ScatterChartOptions
+  | WordCloudOptions;
 
 interface ReportChart extends ReportCommonEl {
   type: ReportElType.Chart;
@@ -136,6 +139,8 @@ export default React.memo(function ReportElement(props: ReportElementProps) {
                 return <PieChart {...chartProps} />;
               case ReportChartType.ScatterChart:
                 return <ScatterChart {...chartProps} />;
+              case ReportChartType.WordCloud:
+                return <WordCloud {...chartProps} />;
               default:
                 // prettier-ignore
                 throw new Error(`Invalid reportEl chartType ${props.chartType}.`);

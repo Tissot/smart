@@ -67,6 +67,10 @@ export default React.memo(function Toolbar(props: ToolbarProps) {
       key: ReportChartType.ScatterChart,
       value: locale.user.report.scatterChart,
     },
+    {
+      key: ReportChartType.WordCloud,
+      value: locale.user.report.wordCloud,
+    },
   ];
   const addChartTypeMenu = (
     <Menu>
