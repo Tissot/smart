@@ -13,6 +13,8 @@ export default {
     signUp: 'Sign Up',
     username: 'username',
     password: 'password',
+    signInSuccessfully: 'Sign in Successfully.',
+    signUpSuccessfully: 'Sign up Successfully',
     usernameLimit:
       'The username should be 3 to 15 in length and consists of letters or numbers.',
     passwordLimit:
@@ -20,6 +22,7 @@ export default {
   },
   user: {
     signOut: 'Sign Out',
+    signOutSuccessfully: 'Sign out successfully.',
     home: {
       title: 'home',
       reports: {
@@ -30,6 +33,7 @@ export default {
       dataSources: {
         title: 'Data sources',
         addDataSource: 'Add a data source',
+        uploadSuccessfully: 'Upload successfully.',
       },
     },
     report: {
@@ -47,6 +51,7 @@ export default {
       textEmptyTips: 'Please enter text.',
       isXAxisTime: 'Is x axis time?',
       isLineSmooth: 'Is line smooth?',
+      renamedSuccessfully: 'Renamed Successfully.',
       savedSuccessfully: 'Saved Successfully.',
     },
   },

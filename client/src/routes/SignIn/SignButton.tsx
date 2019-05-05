@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 
 import { UserContext } from '$contexts/User';
 import { LocaleContext } from '$contexts/Locale';
@@ -53,6 +53,7 @@ export default function SignButton(props: SignButtonProps) {
   }, [props.type]);
 
   const onMutationCompleted = React.useCallback(response => {
+    message.success(props.type === 'sign-up' ? locale.signIn.signUpSuccessfully : locale.signIn.signInSuccessfully);
     const data = response.signUp || response.signInByPassword;
     const { id, username, token } = data;
     setUser({ id, username, token, hasSignedIn: true });

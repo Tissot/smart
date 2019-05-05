@@ -1,10 +1,11 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
-import { Icon } from 'antd';
+import { Icon, message } from 'antd';
 
 import CustomList from '$components/CustomList';
 import UploadData from '$components/UploadData';
 
+import { Locale } from '$assets/locales';
 import { ReactComponent as DataSourceSvg } from '$assets/icons/data-source.svg';
 
 interface DataSourcesProps {
@@ -38,8 +39,11 @@ const dataSourceIcon = (
   />
 );
 
-const dataSourcesHeader = ({ refetch }: any) => (
-  <UploadData onDataUploaded={refetch} />
+const dataSourcesHeader = ({ refetch }: any, locale: Locale) => (
+  <UploadData onDataUploaded={() => {
+    refetch();
+    message.success(locale.user.home.dataSources.uploadSuccessfully);
+  }} />
 );
 
 export default React.memo(function DataSources(props: DataSourcesProps) {

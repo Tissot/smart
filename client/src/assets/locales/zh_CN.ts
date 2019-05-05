@@ -14,12 +14,15 @@ export default {
     signUp: '注册',
     username: '用户名',
     password: '密码',
+    signInSuccessfully: '登录成功。',
+    signUpSuccessfully: '注册成功',
     usernameLimit: '用户名长度为 3 ～ 15，由字母或数字组成。',
     passwordLimit:
       '密码长度为 6 ～ 15，且至少有一个小写字母、大写字母以及数字。',
   },
   user: {
     signOut: '登出',
+    signOutSuccessfully: '登出成功',
     home: {
       title: '首页',
       reports: {
@@ -30,6 +33,7 @@ export default {
       dataSources: {
         title: '数据源',
         addDataSource: '新建数据源',
+        uploadSuccessfully: '上传成功。',
       },
     },
     report: {
@@ -47,6 +51,7 @@ export default {
       textEmptyTips: '请输入文本',
       isXAxisTime: '横轴是否为时间轴？',
       isLineSmooth: '折线是否为曲线？',
+      renamedSuccessfully: '重命名成功。',
       savedSuccessfully: '保存成功。',
     },
   },

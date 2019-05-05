@@ -16,11 +16,14 @@ export interface Locale {
     signUp: string;
     username: string;
     password: string;
+    signInSuccessfully: string;
+    signUpSuccessfully: string;
     usernameLimit: string;
     passwordLimit: string;
   };
   user: {
     signOut: string;
+    signOutSuccessfully: string;
     home: {
       title: string;
       reports: {
@@ -31,6 +34,7 @@ export interface Locale {
       dataSources: {
         title: string;
         addDataSource: string;
+        uploadSuccessfully: string;
       };
     };
     report: {
@@ -48,6 +52,7 @@ export interface Locale {
       textEmptyTips: string;
       isXAxisTime: string;
       isLineSmooth: string;
+      renamedSuccessfully: string;
       savedSuccessfully: string;
     };
   };

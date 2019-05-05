@@ -9,6 +9,8 @@ import Loading from '$components/Loading';
 import Error from '$components/Error';
 import DoActionOnMount from '$components/DoActionOnMount';
 
+import { Locale } from '$assets/locales';
+
 import './index.less';
 
 interface CustomListProps {
@@ -17,7 +19,7 @@ interface CustomListProps {
   getListItems: any;
   removeListItem?: any;
   listHeader?:
-    | ((queryResult: QueryResult<any, OperationVariables>) => any)
+    | ((queryResult: QueryResult<any, OperationVariables>, locale: Locale) => any)
     | React.ReactNode;
   handleListItemClick?(id: string): void;
   itemNameFormatter?(name: string): string;
@@ -50,7 +52,8 @@ export default React.memo(function CustomList(props: CustomListProps) {
           ? typeof listHeader === 'function'
             ? (listHeader as (
                 queryResult: QueryResult<any, OperationVariables>,
-              ) => any)(queryResult)
+                locale: Locale,
+              ) => any)(queryResult, locale)
             : listHeader
           : undefined;
         const listItemStyle = handleListItemClick

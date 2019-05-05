@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { ApolloQueryResult } from 'apollo-boost';
-import { graphql, OperationVariables, MutationFn } from 'react-apollo';
+import { graphql, MutationFn } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Upload, Button, Icon, message } from 'antd';
 import { DataSet } from '@antv/data-set';
@@ -8,9 +7,7 @@ import { DataSet } from '@antv/data-set';
 import { LocaleContext } from '$contexts/Locale';
 
 interface UploadDataInputProps {
-  onDataUploaded(
-    variables?: OperationVariables | undefined,
-  ): Promise<ApolloQueryResult<any>>;
+  onDataUploaded(): void;
 }
 
 interface Response {

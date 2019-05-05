@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavigateFn } from '@reach/router';
-import { Layout, Menu, Divider, Dropdown, Button, Icon } from 'antd';
+import { Layout, Menu, Divider, Dropdown, Button, Icon, message } from 'antd';
 
 import { AbsoluteRoute } from '$routes/index';
 
@@ -87,6 +87,7 @@ export default React.memo(function Home(props: HomeProps) {
   );
 
   const signOut = React.useCallback(() => {
+    message.success(locale.user.signOutSuccessfully);
     setUser({ id: '', username: '', token: '', hasSignedIn: false });
   }, []);
 

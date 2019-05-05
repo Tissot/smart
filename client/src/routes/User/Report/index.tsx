@@ -74,6 +74,9 @@ function Report(props: ReportProps) {
 
   const { locale } = React.useContext(LocaleContext);
   const [report, setReport] = React.useState(getReport.getReport);
+  const onMutationCompleted = React.useCallback(() => {
+    message.success(locale.user.report.renamedSuccessfully);
+  }, []);
 
   return (
     <Layout className="page-container">
@@ -85,6 +88,7 @@ function Report(props: ReportProps) {
           <Mutation
             mutation={RENAME_REPORT}
             variables={{ id: report.id, name: report.name }}
+            onCompleted={onMutationCompleted}
           >
             {renameReport => {
               return (
