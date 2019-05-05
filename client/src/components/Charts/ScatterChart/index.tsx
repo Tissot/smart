@@ -19,7 +19,7 @@ export default React.memo(function ScatterChart(props: ScatterChartProps) {
   const dataKeys = Object.keys(data.rows[0]);
   const xAxis = dataKeys[0];
   const yAxis = dataKeys[1];
-  const point = dataKeys.slice(2, dataKeys.length).join(' ');
+  const point = dataKeys[2];
   const position = `${xAxis}*${yAxis}`;
   const scale = {
     [xAxis]: {

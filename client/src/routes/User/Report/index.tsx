@@ -3,7 +3,6 @@ import { Link } from '@reach/router';
 import { compose, graphql, Mutation, MutationFn } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Layout, Icon, message } from 'antd';
-import moment from 'moment';
 
 import { LocaleContext } from '$contexts/Locale';
 
@@ -110,9 +109,6 @@ function Report(props: ReportProps) {
               );
             }}
           </Mutation>
-          <span className="detail">
-            {locale.common.updatedAt}: {moment(report.updatedAt).format('lll')}
-          </span>
         </div>
       </Header>
       <ReportEditor
