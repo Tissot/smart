@@ -57,7 +57,7 @@ export default function SignButton(props: SignButtonProps) {
     const data = response.signUp || response.signInByPassword;
     const { id, username, token } = data;
     setUser({ id, username, token, hasSignedIn: true });
-  }, []);
+  }, [locale]);
 
   return (
     <Mutation mutation={mutation} onCompleted={onMutationCompleted}>

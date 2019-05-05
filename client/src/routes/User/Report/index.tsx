@@ -75,7 +75,7 @@ function Report(props: ReportProps) {
   const [report, setReport] = React.useState(getReport.getReport);
   const onMutationCompleted = React.useCallback(() => {
     message.success(locale.user.report.renamedSuccessfully);
-  }, []);
+  }, [locale]);
 
   return (
     <Layout className="page-container">

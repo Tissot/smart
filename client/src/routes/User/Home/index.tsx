@@ -89,7 +89,7 @@ export default React.memo(function Home(props: HomeProps) {
   const signOut = React.useCallback(() => {
     message.success(locale.user.signOutSuccessfully);
     setUser({ id: '', username: '', token: '', hasSignedIn: false });
-  }, []);
+  }, [locale]);
 
   const changePath = React.useCallback(
     ({ key }: { key: string }) => props.navigate!(key),
