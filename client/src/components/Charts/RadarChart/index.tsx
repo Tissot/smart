@@ -45,7 +45,7 @@ export default React.memo(function RadarChart(props: RadarChartProps) {
 
   return (
     <Chart width={width} height={height} data={data} scale={scale}>
-      <Coord type="polar"/>
+      <Coord type="polar" radius={0.9} />
       <Legend />
       <Axis
         name={xAxis}
