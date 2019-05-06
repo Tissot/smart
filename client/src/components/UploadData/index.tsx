@@ -57,9 +57,7 @@ function UploadData(props: UploadDataProps) {
           } catch (error) {
             message.error(locale.error.fileContentError);
           }
-        }
-
-        if (file.type === 'text/csv') {
+        } else if (file.type === 'text/csv') {
           const dataView = new DataSet.View()
             .source((event.target as any).result, {
               type: 'csv',
