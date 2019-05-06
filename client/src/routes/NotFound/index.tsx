@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { LocaleContext } from '$contexts/Locale';
 
-import './index.less';
-
 interface NotFoundProps {
   default: boolean;
 }

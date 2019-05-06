@@ -3,8 +3,6 @@ import { Spin } from 'antd';
 
 import { LocaleContext } from '$contexts/Locale';
 
-import './index.less';
-
 interface LoadingProps {
   children?: React.ReactNode;
 }
