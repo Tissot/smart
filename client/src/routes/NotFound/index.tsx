@@ -11,5 +11,5 @@ interface NotFoundProps {
 export default React.memo(function NotFound(props: NotFoundProps) {
   const { locale } = React.useContext(LocaleContext);
 
-  return <span>{locale.notFound}</span>;
+  return <div className="not-found">{locale.notFound}</div>;
 });
