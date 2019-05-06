@@ -58,8 +58,15 @@ export default React.memo(function(props: ApolloProviderProps) {
                   break;
               }
             });
+          }
 
-            if (networkError) message.error(locale.error.networkError);
+          if (networkError) {
+            if ((networkError as any).response) {
+              const { status, statusText } = (networkError as any).response;
+              message.error(`${status}: ${statusText}`);
+            } else {
+              message.error(locale.error.networkError);
+            }
           }
         },
       }),
