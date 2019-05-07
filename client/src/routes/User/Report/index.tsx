@@ -71,14 +71,6 @@ function Report(props: ReportProps) {
 
   if (!getReport || !getDataSources || !saveReport) return null;
 
-  for (const reportEl of getReport.getReport.elements) {
-    for (const dataSource of getDataSources.getDataSources.rows) {
-      if (dataSource.id === reportEl.dataSource.id) {
-        reportEl.dataSource.data = dataSource.data;
-      }
-    }
-  }
-
   const { locale } = React.useContext(LocaleContext);
   const [report, setReport] = React.useState(getReport.getReport);
   const onMutationCompleted = React.useCallback(() => {
@@ -132,7 +124,8 @@ function Report(props: ReportProps) {
                     ? {
                         ...reportEl,
                         dataSource: {
-                          id: reportEl.dataSource.id,
+                          ...reportEl.dataSource,
+                          data: reportEl.dataSource.data.origin,
                         },
                       }
                     : reportEl,
